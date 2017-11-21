@@ -1,0 +1,30 @@
+/* Your app custom files in this file */
+.panelImage img {
+  width: 100%;
+}
+
+.panelCard .card {
+  margin: 0px;
+  box-shadow: none;
+}
+
+.list-block .list-button {
+  font-size: 14px;
+}
+
+.page-content .card {
+  margin-top: 14px;
+}
+
+.panelWords {
+  position: relative;
+  left: 7%;
+}
+
+#mainButton .card {
+  box-shadow: none;
+}
+
+.navbar-fixed .navbar {
+  box-shadow: none;
+}

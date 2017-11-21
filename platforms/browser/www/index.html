@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <!-- Your app title -->
+    <title>My App</title>
+
+    <link rel="stylesheet" href="lib/framework7/css/framework7.material.min.css">
+    <link rel="stylesheet" href="lib/framework7/css/framework7.material.colors.min.css">
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="icons/iconfont/material-icons.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>   
+    <!-- Panels Overlay -->
+  <div class="panel-overlay"></div>
+  <!-- Right panel with cover effect-->
+    <div class="panel panel-left panel-cover transparentbar2">
+        <div class="panelCard">
+            <div class="card transparentbar1">
+            <div class="panelImage"><img src="lib/framework7/img/image1.jpg"></div>
+                <div class="panelListBlock">
+                    <div class="list-block">
+                        <ul>
+                            <li>
+                                <a href="#" class="list-button item-link"><i class="icon material-icons md-dark">home</i><span class="panelWords">Home</span></a>
+                            </li>
+                            <li>
+                                <a href="#" class="list-button item-link"><i class="icon material-icons md-dark">history</i><span class="panelWords">History</span></a>
+                            </li>
+                            <li>
+                                <a href="#" class="list-button item-link"><i class="icon material-icons md-dark">help_outline</i><span class="panelWords">About</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Views -->
+    <div class="views">
+        <!-- Your main view, should have "view-main" class -->
+        <div class="view view-main">
+            <!-- Pages container, because we use fixed navbar and toolbar, it has additional appropriate classes-->
+            <div class="pages navbar-fixed toolbar-fixed">
+
+            <div class="pages">
+                 <!-- set the navbar-->
+                <div class="navbar transparentbar">
+                    <div class="navbar-inner">
+                        <div class="left">
+                            <a href="#" class="link icon-only open-panel">
+                                <i class="icon icon-bars"></i>
+                            </a>
+                        </div>
+                        <div class="left"></div>
+                    </div>
+                </div>
+                <div class="page backGroundImage" data-page="index">
+                    <!--set the background color -->
+                    <div class="page-content">
+                        <div class="content-block">
+                            <div class="ai-logo"><img src="lib/framework7/img/ai-logo-2.png"width="230"></div>
+                            <div class="ai-logo"><img src="lib/framework7/img/ai-logo-1.png"width="180"></div>
+                            <p class="buttons-row">
+                            <a href="#" class="button button-raised button-big transparentbar">Camera</a>
+                            <a href="#" class="button button-raised button-big transparentbar">Gallery</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="page cached" data-page="">
+                    <div class="page-content">
+                        <div class="content-block">
+                            <p>Page bghbhjbg hjbkj,content goes here</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
+    <script type="text/javascript" src="js/my-app.js"></script>
+</body>
+
+</html>
