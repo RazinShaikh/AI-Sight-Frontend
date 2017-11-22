@@ -14,8 +14,7 @@ document.addEventListener("deviceready", function() {
         function onSuccess(imageData) {
             var image = document.getElementById('image');
             image.style.display = 'block';
-            image.src = imageData;
-			document.getElementById("base64").innerHTML = image.src; //test
+            image.src = "data:image/jpeg;base64," + imageData;
         }
 
         function onFail(message) {
@@ -24,16 +23,3 @@ document.addEventListener("deviceready", function() {
 
 }, false);
 
-
- /*var pictureSource;  //设定图片来源
-
- function onDeviceReady() {
-      pictureSource=navigator.camera.PictureSourceType;
-    }
-
-function getPhoto(source) {
-// Retrieve image file location from specified source
-navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 100,
-destinationType: destinationType.DATA_URL,
-sourceType: source });
-}*/
