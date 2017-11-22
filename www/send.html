@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="lib/framework7/css/framework7.material.colors.min.css">
     <!-- Path to your custom app styles-->
     <link rel="stylesheet" href="icons/iconfont/material-icons.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles2.css">
 </head>
 
 <body>
@@ -24,60 +24,30 @@
     <div class="statusbar-overlay"></div>   
     <!-- Panels Overlay -->
   <div class="panel-overlay"></div>
-  <!-- Right panel with cover effect-->
-    <div class="panel panel-left panel-cover transparentbar2">
-        <div class="panelCard">
-            <div class="card transparentbar1">
-            <div class="panelImage"><img src="lib/framework7/img/image1.jpg"></div>
-                <div class="panelListBlock">
-                    <div class="list-block">
-                        <ul>
-                            <li>
-                                <a href="#" class="list-button item-link"><i class="icon material-icons md-dark">home</i><span class="panelWords">Home</span></a>
-                            </li>
-                            <li>
-                                <a href="#" class="list-button item-link"><i class="icon material-icons md-dark">history</i><span class="panelWords">History</span></a>
-                            </li>
-                            <li>
-                                <a href="#" class="list-button item-link"><i class="icon material-icons md-dark">help_outline</i><span class="panelWords">About</span></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Views -->
     <div class="views">
         <!-- Your main view, should have "view-main" class -->
         <div class="view view-main">
-            <!-- Pages container, because we use fixed navbar and toolbar, it has additional appropriate classes-->
-            <div class="pages navbar-fixed toolbar-fixed">
-
+            
             <div class="pages">
-                 <!-- set the navbar-->
-                <div class="navbar transparentbar">
-                    <div class="navbar-inner">
-                        <div class="left">
-                            <a href="#" class="link icon-only open-panel">
-                                <i class="icon icon-bars"></i>
-                            </a>
-                        </div>
-                        <div class="left"></div>
-                    </div>
-                </div>
-                <div class="page backGroundImage" data-page="index">
-                    <!--set the background color -->
-                    <div class="page-content">
+                
+                <div class="page backgroundcolor" data-page="index">  
+
+                    <!-- Floating Action Button -->
+                    <a href="#" class="floating-button color-bluegray photo-editor">
+                        <i class="icon icon-plus"></i>
+                    </a>
+
+                        <div class="page-content">
                         <div class="content-block">
-                            <div class="ai-logo"><img src="lib/framework7/img/ai-logo-2.png"width="230"></div>
-                            <div class="ai-logo"><img src="lib/framework7/img/ai-logo-1.png"width="180"></div>
+                            <div class="picture"><img class="size" src="lib/framework7/img/image1.jpg"></div>    
                             <p class="buttons-row">
-                            <a href="#" class="button button-raised button-big transparentbar"><span class="wordColor">Camera</span></a>
-                            <a href="#" class="button button-raised button-big transparentbar"><span class="wordColor">Gallery</span></a>
-                            </p>
+                            <a href="#" class="button button-big button-fill button-raised color-bluegray"><span class="wordColor1">Send</span></a>
+                            </p>                         
                         </div>
+
+                            
                     </div>
                 </div>
             
