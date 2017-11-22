@@ -54,3 +54,11 @@
 .navbar {
   height: 50px;
 }
+
+.wordColor {
+  color: gray;
+}
+
+.pages .page .page-content{
+  padding-top: 20%;
+}
