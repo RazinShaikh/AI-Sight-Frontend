@@ -23,7 +23,7 @@ function sendImage(image_b64) {
       datatype: 'json',
       type: 'POST',
       data: imgdata,
-      url: "http://127.0.0.1:8000/detect/",
+      url: "http://10.176.146.26:1234/detect/",
       success: handleImage
     });
 }
@@ -31,4 +31,10 @@ function sendImage(image_b64) {
 function handleImage(img_arg) {
     var image_json = JSON.parse(img_arg);
     console.log(image_json);
+    $$('#temp_delete').hide();
+}
+
+
+function doSomething(imageData) {
+    sendImage(imageData);
 }
