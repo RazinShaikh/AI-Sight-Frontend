@@ -2,6 +2,6 @@
 
 ## Frontend
 
-Made using phonegap in material design.
+Integrate camera and gallery with user interface
 
-ver0.2
+ver0.3
