@@ -9,6 +9,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
 
+
     <!-- Your app title -->
     <title>My App</title>
 
@@ -17,11 +18,12 @@
     <!-- Path to your custom app styles-->
     <link rel="stylesheet" href="icons/iconfont/material-icons.css">
     <link rel="stylesheet" href="css/styles.css">
+
 </head>
 
 <body>
     <!-- Status bar overlay for fullscreen mode-->
-    <div class="statusbar-overlay"></div>   
+    <div class="statusbar-overlay"></div>
     <!-- Panels Overlay -->
   <div class="panel-overlay"></div>
   <!-- Right panel with cover effect-->
@@ -68,19 +70,20 @@
                     </div>
                 </div>
                 <div class="page backGroundImage" data-page="index">
-                    <!--set the background color -->
+
                     <div class="page-content">
                         <div class="content-block">
                             <div class="ai-logo"><img src="lib/framework7/img/ai-logo-2.png"width="230"></div>
                             <div class="ai-logo"><img src="lib/framework7/img/ai-logo-1.png"width="180"></div>
                             <p class="buttons-row">
-                            <a href="#" class="button button-raised button-big transparentbar"><span class="wordColor">Camera</span></a>
-                            <a href="#" class="button button-raised button-big transparentbar"><span class="wordColor">Gallery</span></a>
+                            <a href="#" id="getPhoto" class="button button-raised button-big transparentbar" ><span value="Camera" span class="wordColor">Camera</span></a>
+                            <a href="#" id="openAlbum" class="button button-raised button-big transparentbar"><span class="wordColor">Gallery</span></a>
                             </p>
                         </div>
                     </div>
                 </div>
-            
+
+
                 <div class="page cached" data-page="">
                     <div class="page-content">
                         <div class="content-block">
@@ -93,9 +96,12 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
-    <script type="text/javascript" src="js/my-app.js"></script>
+    <script type="text/javascript"  src="js/common.js"></script>
+    <script type="text/javascript"  src="js/camera.js"></script>
+    <script type="text/javascript"  src="js/file.js"></script>
+    <script type="text/javascript"  src="cordova.js"></script>
+    <script type="text/javascript"  src="lib/framework7/js/framework7.min.js"></script>
+    <script type="text/javascript"  src="js/my-app.js"></script>
 </body>
 
 </html>
