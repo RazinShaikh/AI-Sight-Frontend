@@ -23,7 +23,7 @@ function sendImage(image_b64) {
       datatype: 'json',
       type: 'POST',
       data: imgdata,
-      url: "http://10.176.146.26:1234/detect/",
+      url: "http://192.168.137.1:1234/detect/",
       success: handleImage
     });
 }
@@ -31,10 +31,14 @@ function sendImage(image_b64) {
 function handleImage(img_arg) {
     var image_json = JSON.parse(img_arg);
     console.log(image_json);
-    $$('#temp_delete').hide();
+    $$('#imgShow').attr('src', 'data:image; base64,'+ image_json["img"]);
 }
 
 
-function doSomething(imageData) {
-    sendImage(imageData);
+function displayImage(imageData) {
+    mainView.router.load({
+        pageName: 'send'
+    });
+    $$('#imgShow').attr('src', 'data:image; base64,'+imageData);
+    $$('#sendButton').onclick(sendImage(imageData));
 }

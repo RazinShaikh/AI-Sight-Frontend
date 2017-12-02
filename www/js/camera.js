@@ -3,9 +3,9 @@ document.addEventListener("deviceready", function() {
 
         $$(document).on("click", "#getPhoto", function () {
 
-            navigator.camera.getPicture(doSomething, onFail, {
+            navigator.camera.getPicture(displayImage, onFail, {
                 quality: 100,
-				saveToPhotoAlbum: false, //added
+		saveToPhotoAlbum: false, //added
                 destinationType: Camera.DestinationType.DATA_URL,
             });
 

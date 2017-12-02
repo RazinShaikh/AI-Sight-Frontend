@@ -26,9 +26,10 @@
   	left: 7%;
 }
 
-.buttons-row{
-	position: relative;
-  	top: 20%;
+.buttons-row {
+	   position: relative;
+    top: 20%;
+    margin-top: 45%;
 }
 
 .transparentbar {
@@ -43,9 +44,6 @@
   background: rgba(247, 247, 248, 0.7) /* 0.55 = opacity */
 }
 
-.buttons-row {
-  margin-top: 45%;
-}
 
 .ai-logo {
   margin-top: 20%;

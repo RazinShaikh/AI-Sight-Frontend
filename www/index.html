@@ -18,6 +18,7 @@
     <!-- Path to your custom app styles-->
     <link rel="stylesheet" href="icons/iconfont/material-icons.css">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles2.css">
 
 </head>
 
@@ -76,6 +77,7 @@
                             <div class="ai-logo" id="temp_delete"><img src="lib/framework7/img/ai-logo-2.png"width="230"></div>
                             <div class="ai-logo"><img src="lib/framework7/img/ai-logo-1.png"width="180"></div>
                             <p class="buttons-row">
+
                             <a href="#" id="getPhoto" class="button button-raised button-big transparentbar" ><span value="Camera" span class="wordColor">Camera</span></a>
                             <a href="#" id="openAlbum" class="button button-raised button-big transparentbar"><span class="wordColor">Gallery</span></a>
                             </p>
@@ -84,11 +86,20 @@
                 </div>
 
 
-                <div class="page cached" data-page="">
-                    <div class="page-content">
-                        <div class="content-block">
-                            <p>Page bghbhjbg hjbkj,content goes here</p>
+                <div class="page backgroundcolor cached" data-page="send">
+
+                    <!-- Floating Action Button -->
+                    <a href="#" class="floating-button color-bluegray photo-editor">
+                        <i class="icon icon-plus"></i>
+                    </a>
+
+                    <div class="page-content page-content-for-send">
+                        <div class="picture">
+                          <img class="size" id="imgShow" src="">
                         </div>
+                        <a href="#" id="sendButton" class="button button-big button-fill button-raised color-bluegray">
+                            <span class="wordColor1">Send</span>
+                        </a>
                     </div>
                 </div>
 

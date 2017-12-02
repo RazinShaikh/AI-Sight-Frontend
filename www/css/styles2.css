@@ -1,14 +1,11 @@
 
 
-.pages .page .page-content{
+.pages .page .page-content-for-send{
   padding-top: 10%;
 }
 
 .backgroundcolor{
   background-color: white;
-}
-.content-block{
-  padding: 0;
 }
 
 .picture{
@@ -25,4 +22,3 @@
   	top: 1.5%;
     left: 83%;
 }
-

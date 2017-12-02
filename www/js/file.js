@@ -3,7 +3,7 @@ document.addEventListener("deviceready", function() {
 
         $$(document).on("click", "#openAlbum", function () {
 
-            navigator.camera.getPicture(doSomething, onFail, {
+            navigator.camera.getPicture(displayImage, onFail, {
                 quality: 100,
                 sourceType : Camera.PictureSourceType.SAVEDPHOTOALBUM,
                 destinationType: Camera.DestinationType.DATA_URL,
