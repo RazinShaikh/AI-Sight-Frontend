@@ -16,8 +16,13 @@ var mainView = myApp.addView('.view-main', {
 function onDeviceReady() {
     // Now safe to use device APIs
 
+    // document.addEventListener('backbutton', function (e) {
+    //     mainView.router.back();
+    // });
+
+
     $$(document).on("click", "#getPhoto", function () {
-        
+
         navigator.camera.getPicture(displayImage, errorCallback, {
             quality: 50,
             saveToPhotoAlbum: false, //added
@@ -27,7 +32,7 @@ function onDeviceReady() {
     });
 
     $$(document).on("click", "#openAlbum", function () {
-        
+
         navigator.camera.getPicture(displayImage, errorCallback, {
             quality: 50,
             sourceType : Camera.PictureSourceType.SAVEDPHOTOALBUM,
@@ -38,7 +43,8 @@ function onDeviceReady() {
 
 
     function displayImage(fileUri) {
-        mainView.router.load({pageName: 'send'});
+        // mainView.router.load({pageName: 'send'});
+        myApp.popup('.popup');
         $$('#imgShow').attr('src', fileUri);
 
         $$('#sendButton').on("click", function() {
@@ -49,6 +55,7 @@ function onDeviceReady() {
     }
 
     function sendImage(fileUri) {
+        console.log("testt");
         window.resolveLocalFileSystemURL(
             fileUri,
             function (fileEntry) {
@@ -56,9 +63,10 @@ function onDeviceReady() {
                     var reader = new FileReader();
 
                     reader.onloadend = function() {
+                        console.log("testttttttt");
                         var blob = new Blob([new Uint8Array(this.result)], { type: "image/png" });
                         var oReq = new XMLHttpRequest();
-                        oReq.open("POST", "http://192.168.0.105:8000/img3/", true);
+                        oReq.open("POST", "http://192.168.0.101:8000/img3/", true);
 
                         oReq.onload = function (oEvent) {
                             showDetectionResult(oReq.response);
@@ -75,27 +83,52 @@ function onDeviceReady() {
     }
 
     function showDetectionResult(img_arg) {
-        
+
         var imageJSON = JSON.parse(img_arg);
-        var boxes = imageJSON["boxes"];
-        var scores = imageJSON["scores"];
-        var classes = imageJSON["classes"];
+        var boxes = imageJSON.boxes;
+        var scores = imageJSON.scores;
+        var classes = imageJSON.classes;
+        var display_string = imageJSON.display_string;
         var canvas = document.getElementById('myCanvas');
         var ctx = canvas.getContext('2d');
 
         canvas.width = $$("#imgShow").width();
         canvas.height = $$("#imgShow").height();
 
-        drawBoxes(ctx, boxes, scores, classes, canvas.width, canvas.height);
+        drawBoxes(ctx, boxes, scores, classes, display_string, canvas.width, canvas.height);
 
         myApp.hideIndicator();
     }
 
-    function drawBoxes(ctx, boxes, scores, classes, canvas_width, canvas_height) {
+    function drawBoxes(ctx, boxes, scores, classes, display_string, canvas_width, canvas_height) {
         var i, x, y, box_width, box_height;
 
         ctx.lineWidth = "5";
-        ctx.strokeStyle = "blue";
+        var std_colors = [
+            'AliceBlue', 'Chartreuse', 'Aqua', 'Aquamarine', 'Azure', 'Beige', 'Bisque',
+            'BlanchedAlmond', 'BlueViolet', 'BurlyWood', 'CadetBlue', 'AntiqueWhite',
+            'Chocolate', 'Coral', 'CornflowerBlue', 'Cornsilk', 'Crimson', 'Cyan',
+            'DarkCyan', 'DarkGoldenRod', 'DarkGrey', 'DarkKhaki', 'DarkOrange',
+            'DarkOrchid', 'DarkSalmon', 'DarkSeaGreen', 'DarkTurquoise', 'DarkViolet',
+            'DeepPink', 'DeepSkyBlue', 'DodgerBlue', 'FireBrick', 'FloralWhite',
+            'ForestGreen', 'Fuchsia', 'Gainsboro', 'GhostWhite', 'Gold', 'GoldenRod',
+            'Salmon', 'Tan', 'HoneyDew', 'HotPink', 'IndianRed', 'Ivory', 'Khaki',
+            'Lavender', 'LavenderBlush', 'LawnGreen', 'LemonChiffon', 'LightBlue',
+            'LightCoral', 'LightCyan', 'LightGoldenRodYellow', 'LightGray', 'LightGrey',
+            'LightGreen', 'LightPink', 'LightSalmon', 'LightSeaGreen', 'LightSkyBlue',
+            'LightSlateGray', 'LightSlateGrey', 'LightSteelBlue', 'LightYellow', 'Lime',
+            'LimeGreen', 'Linen', 'Magenta', 'MediumAquaMarine', 'MediumOrchid',
+            'MediumPurple', 'MediumSeaGreen', 'MediumSlateBlue', 'MediumSpringGreen',
+            'MediumTurquoise', 'MediumVioletRed', 'MintCream', 'MistyRose', 'Moccasin',
+            'NavajoWhite', 'OldLace', 'Olive', 'OliveDrab', 'Orange', 'OrangeRed',
+            'Orchid', 'PaleGoldenRod', 'PaleGreen', 'PaleTurquoise', 'PaleVioletRed',
+            'PapayaWhip', 'PeachPuff', 'Peru', 'Pink', 'Plum', 'PowderBlue', 'Purple',
+            'Red', 'RosyBrown', 'RoyalBlue', 'SaddleBrown', 'Green', 'SandyBrown',
+            'SeaGreen', 'SeaShell', 'Sienna', 'Silver', 'SkyBlue', 'SlateBlue',
+            'SlateGray', 'SlateGrey', 'Snow', 'SpringGreen', 'SteelBlue', 'GreenYellow',
+            'Teal', 'Thistle', 'Tomato', 'Turquoise', 'Violet', 'Wheat', 'White',
+            'WhiteSmoke', 'Yellow', 'YellowGreen'
+        ];
 
         for (i = 0; i < boxes.length; i++) {
 
@@ -104,8 +137,23 @@ function onDeviceReady() {
             box_width = (boxes[i][3] - boxes[i][1]) * canvas_width;
             box_height = (boxes[i][2] - boxes[i][0]) * canvas_height;
 
+            var color = std_colors[classes[i] % std_colors.length];
             ctx.beginPath();
+
+            ctx.strokeStyle = color;
+            
             ctx.rect(x, y, box_width, box_height);
+
+            ctx.fillStyle = color;
+
+            var textwidth = ctx.measureText(display_string[i]).width;
+
+            ctx.fillRect(x, y-18, textwidth, 18);
+
+            ctx.fillStyle = 'black';
+
+            ctx.font = "Arial";
+            ctx.fillText(display_string[i], x, y-9);
             ctx.stroke();
         }
     }
@@ -117,3 +165,13 @@ function onDeviceReady() {
         //alert("error: "+err);
     }
 }
+
+
+//////////////////////////////////////////////////////
+////////////////////////TESTING///////////////////////
+//////////////////////////////////////////////////////
+// var img_arg = '{"boxes":[[0.20688289403915405,0.02382335066795349,0.8024314045906067,0.9165056943893433]],"scores":[0.9100580811500549],"classes":[3],"display_string":["car: 91%"]}';
+
+// displayImage("test.jpg");
+
+// showDetectionResult(img_arg);
