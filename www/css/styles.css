@@ -1,5 +1,32 @@
+#myCanvas {
+  z-index: 20;
+}
+
+#imgShow {
+  max-width: 100%;
+  max-height: 100%;
+  z-index: 1;
+}
+
+.centerImage {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.sendButton {
+  z-index: 40;
+  position: fixed;
+  bottom: 5%;
+  width: 20%;
+  left: 40%;
+}
+
 .panelCard .card {
-  margin: 0px;
+  margin: 0;
   box-shadow: 0 0 0 rgba(0,0,0,.12), 0 0 0 rgba(0,0,0,.24);
 }
 
@@ -17,6 +44,10 @@
   background-size: cover;
 }
 
+.backgroundcolor{
+  background-color: black;
+}
+
 .ai-logo{
   text-align: center;
 }
@@ -27,21 +58,21 @@
 }
 
 .buttons-row {
-	   position: relative;
+	  position: relative;
     top: 20%;
     margin-top: 45%;
 }
 
 .transparentbar {
-  background: rgba(247, 247, 248, 0.55) /* 0.55 = opacity */
+  background: rgba(247, 247, 248, 0.55)
 }
 
 .transparentbar1 {
-  background: rgba(247, 247, 248, 0) /* 0.55 = opacity */
+  background: rgba(247, 247, 248, 0)
 }
 
 .transparentbar2 {
-  background: rgba(247, 247, 248, 0.7) /* 0.55 = opacity */
+  background: rgba(247, 247, 248, 0.7)
 }
 
 

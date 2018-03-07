@@ -9,16 +9,13 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
 
-
-    <!-- Your app title -->
-    <title>My App</title>
+    <title>AI-Sight</title>
 
     <link rel="stylesheet" href="lib/framework7/css/framework7.material.min.css">
     <link rel="stylesheet" href="lib/framework7/css/framework7.material.colors.min.css">
     <!-- Path to your custom app styles-->
     <link rel="stylesheet" href="icons/iconfont/material-icons.css">
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/styles2.css">
 
 </head>
 
@@ -28,7 +25,7 @@
     <!-- Panels Overlay -->
   <div class="panel-overlay"></div>
   <!-- Right panel with cover effect-->
-    <div class="panel panel-left panel-cover transparentbar2">
+    <div class="panel panel-left panel-cover">
         <div class="panelCard">
             <div class="card transparentbar1">
             <div class="panelImage"><img src="lib/framework7/img/image1.png"></div>
@@ -74,8 +71,8 @@
 
                     <div class="page-content">
                         <div class="content-block">
-                            <div class="ai-logo" id="temp_delete"><img src="lib/framework7/img/ai-logo-2.png"width="230"></div>
-                            <div class="ai-logo"><img src="lib/framework7/img/ai-logo-1.png"width="180"></div>
+                            <div class="ai-logo" id="temp_delete"><img src="lib/framework7/img/ai-logo-2.png" width="230"></div>
+                            <div class="ai-logo"><img src="lib/framework7/img/ai-logo-1.png" width="180"></div>
                             <p class="buttons-row">
 
                             <a href="#" id="getPhoto" class="button button-raised button-big transparentbar" ><span value="Camera" span class="wordColor">Camera</span></a>
@@ -84,32 +81,22 @@
                         </div>
                     </div>
                 </div>
-
-
-                <div class="page backgroundcolor cached" data-page="send">
-
-                    <!-- Floating Action Button -->
-                    <a href="#" class="floating-button color-bluegray photo-editor">
-                        <i class="icon icon-plus"></i>
-                    </a>
-
-                    <div class="page-content page-content-for-send">
-                        <div class="picture">
-                          <img class="size" id="imgShow" src="">
-                        </div>
-                        <a href="#" id="sendButton" class="button button-big button-fill button-raised color-bluegray">
-                            <span class="wordColor1">Send</span>
-                        </a>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
 
-    <script type="text/javascript"  src="js/common.js"></script>
-    <script type="text/javascript"  src="js/camera.js"></script>
-    <script type="text/javascript"  src="js/file.js"></script>
+    <div class="popup-overlay"></div>
+    <div class="popup backgroundcolor">
+        <div class="page-content page-content-for-send">
+            <img id="imgShow" class="centerImage" />
+            <canvas id="myCanvas" class="centerImage"> </canvas>
+            <!-- TODO: Use the send icon instead of button -->
+            <a href="#" id="sendButton" class="button button-big button-fill button-raised color-white sendButton">
+                <span class="wordColor">Send</span>
+            </a>
+        </div>
+    </div>
+
     <script type="text/javascript"  src="cordova.js"></script>
     <script type="text/javascript"  src="lib/framework7/js/framework7.min.js"></script>
     <script type="text/javascript"  src="js/my-app.js"></script>
