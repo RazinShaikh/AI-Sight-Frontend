@@ -1,93 +1,73 @@
-#myCanvas {
-  z-index: 20;
+.myCanvas {
+    z-index: 20;
 }
 
-#imgShow {
-  max-width: 100%;
-  max-height: 100%;
-  z-index: 1;
-}
-
-.centerImage {
-  position: absolute;
-  margin: auto;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+.imgShow {
+    z-index: 1;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .sendButton {
-  z-index: 40;
-  position: fixed;
-  bottom: 5%;
-  width: 20%;
-  left: 40%;
+    bottom: 10%;
+    z-index: 40;
+    width: 20%;
 }
 
 .panelCard .card {
-  margin: 0;
-  box-shadow: 0 0 0 rgba(0,0,0,.12), 0 0 0 rgba(0,0,0,.24);
+    margin: 0;
+    box-shadow: 0 0 0 rgba(0, 0, 0, .12), 0 0 0 rgba(0, 0, 0, .24);
 }
 
 .panelImage img {
-  width: 100%;
-  opacity: 0.7;
+    width: 100%;
 }
 
 .panelListBlock .list-block {
-  margin: 0 0;
+    margin: 0 0;
 }
 
-.backGroundImage{
-	background-image: url(../lib/framework7/img/background.jpg);
-  background-size: cover;
-}
-
-.backgroundcolor{
-  background-color: black;
-}
-
-.ai-logo{
-  text-align: center;
-}
-
-.panelWords {
-  	position: relative;
-  	left: 7%;
-}
-
-.buttons-row {
-	  position: relative;
-    top: 20%;
-    margin-top: 45%;
-}
-
-.transparentbar {
-  background: rgba(247, 247, 248, 0.55)
-}
-
-.transparentbar1 {
-  background: rgba(247, 247, 248, 0)
-}
-
-.transparentbar2 {
-  background: rgba(247, 247, 248, 0.7)
-}
-
-
-.ai-logo {
-  margin-top: 20%;
+.backGroundImage {
+    /*	background-image: url(../lib/framework7/img/background.jpg);*/
+    background-size: cover;
+    background-color: #26A69A;
 }
 
 .navbar {
-  height: 50px;
+    background-color: #00796B;
 }
 
-.wordColor {
-  color: gray;
+.twoButtons {
+    width: 85%;
+    bottom: 15%;
 }
 
-.pages .page .page-content{
-  padding-top: 20%;
+.closeIcon {
+    position: fixed !important;
+    right: 6%;
+    top: 4%;
+    z-index: 40;
+    color: rgba(255, 255, 255, 0.6) !important;
+    font-size: 30px;
+}
+
+.hCenter {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* .vCenter {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+} */
+
+.ai-logo {
+    top: 25%;
+}
+
+.panelWords {
+    position: relative;
+    left: 7%;
 }
