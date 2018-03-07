@@ -3,6 +3,7 @@ document.addEventListener("deviceready", onDeviceReady, false);
 // Initialize app
 var myApp = new Framework7({
     swipePanel:'left',
+    swipePanelActiveArea: 24,
     material:true,
 });
 
@@ -20,11 +21,12 @@ function onDeviceReady() {
     //     mainView.router.back();
     // });
 
+    StatusBar.backgroundColorByHexString("#004D40");
 
     $$(document).on("click", "#getPhoto", function () {
 
         navigator.camera.getPicture(displayImage, errorCallback, {
-            quality: 50,
+            quality: 100,
             saveToPhotoAlbum: false, //added
             destinationType: Camera.DestinationType.FILE_URI,
             correctOrientation: true
@@ -44,7 +46,21 @@ function onDeviceReady() {
 
     function displayImage(fileUri) {
         // mainView.router.load({pageName: 'send'});
-        myApp.popup('.popup');
+        var popupHTML = '<div class="popup bg-black">' +
+                        '    <div class="page-content page-content-for-send">' +
+                        '        <img id="imgShow" class="imgShow hCenter vCenter" />' +
+                        '        <canvas id="myCanvas" class="myCanvas hCenter vCenter"> </canvas>' +
+                        '        <div href="#" class="close-popup">' +
+                        '            <i class="icon material-icons md-dark closeIcon">cancel</i>' +
+                        '        </div>' +
+                        '        <!-- TODO: Use the send icon instead of button -->' +
+                        '        <a href="#" id="sendButton" class="button button-big button-fill button-raised color-white sendButton  hCenter">' +
+                        '            <span class="color-black">Detect</span>' +
+                        '        </a>' +
+                        '    </div>' +
+                        '</div>';
+                        
+        myApp.popup(popupHTML);
         $$('#imgShow').attr('src', fileUri);
 
         $$('#sendButton').on("click", function() {
@@ -55,7 +71,6 @@ function onDeviceReady() {
     }
 
     function sendImage(fileUri) {
-        console.log("testt");
         window.resolveLocalFileSystemURL(
             fileUri,
             function (fileEntry) {
@@ -63,10 +78,9 @@ function onDeviceReady() {
                     var reader = new FileReader();
 
                     reader.onloadend = function() {
-                        console.log("testttttttt");
                         var blob = new Blob([new Uint8Array(this.result)], { type: "image/png" });
                         var oReq = new XMLHttpRequest();
-                        oReq.open("POST", "http://192.168.0.101:8000/img3/", true);
+                        oReq.open("POST", "http://10.176.66.155:8000/img3/", true);
 
                         oReq.onload = function (oEvent) {
                             showDetectionResult(oReq.response);
@@ -157,8 +171,6 @@ function onDeviceReady() {
             ctx.stroke();
         }
     }
-
-
 
     function errorCallback(err) {
         //uncomment for debugging.
