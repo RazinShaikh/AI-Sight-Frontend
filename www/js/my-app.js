@@ -21,7 +21,7 @@ function onDeviceReady() {
     //     mainView.router.back();
     // });
 
-    StatusBar.backgroundColorByHexString("#004D40");
+    StatusBar.backgroundColorByHexString("#12a6b3");
 
     $$(document).on("click", "#getPhoto", function () {
 

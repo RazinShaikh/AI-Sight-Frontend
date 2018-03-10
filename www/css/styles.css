@@ -30,16 +30,20 @@
 .backGroundImage {
     /*	background-image: url(../lib/framework7/img/background.jpg);*/
     background-size: cover;
-    background-color: #26A69A;
+    background-color: /*#f5f5f5*/#eaeaea;
 }
 
 .navbar {
-    background-color: #00796B;
+    background-color: #14b9c8;
 }
 
 .twoButtons {
     width: 85%;
     bottom: 15%;
+}
+
+.button {
+    background-color: #fafafa;
 }
 
 .closeIcon {
@@ -64,10 +68,34 @@
 } */
 
 .ai-logo {
-    top: 25%;
+    top: 20%;
+}
+
+.ai-text {
+    top: 38%;
 }
 
 .panelWords {
     position: relative;
     left: 7%;
+}
+
+.camera-button {
+    position: absolute;
+    left: 40px;
+    width: 72px;
+    height: 72px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.19), 0 3px 6px rgba(0,0,0,.23);
+}
+
+.gallery-button {
+    position: absolute;
+    right: 40px;
+    width: 72px;
+    height: 72px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.19), 0 3px 6px rgba(0,0,0,.23);
+}
+
+a.color-14b9c8 {
+    background-color: #14b9c8;
 }

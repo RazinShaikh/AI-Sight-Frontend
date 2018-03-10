@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <!-- Required meta tags-->
     <meta charset="utf-8">
@@ -8,15 +9,12 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
-
     <title>AI-Sight</title>
-
     <link rel="stylesheet" href="lib/framework7/css/framework7.material.min.css">
     <link rel="stylesheet" href="lib/framework7/css/framework7.material.colors.min.css">
     <!-- Path to your custom app styles-->
     <link rel="stylesheet" href="icons/iconfont/material-icons.css">
     <link rel="stylesheet" href="css/styles.css">
-
 </head>
 
 <body>
@@ -26,7 +24,7 @@
     <div class="panel panel-left panel-cover">
         <div class="panelCard">
             <div class="card">
-            <div class="panelImage"><img src="lib/framework7/img/image1.png"></div>
+                <div class="panelImage"><img src="lib/framework7/img/image1.png"></div>
                 <div class="panelListBlock">
                     <div class="list-block">
                         <ul>
@@ -45,45 +43,41 @@
             </div>
         </div>
     </div>
-
     <!-- Views -->
     <div class="views">
         <!-- Your main view, should have "view-main" class -->
         <div class="view view-main">
             <!-- Pages container, because we use fixed navbar, it has additional appropriate classes-->
             <div class="pages navbar-fixed">
-
-            <div class="pages">
-                <div class="page backGroundImage" data-page="index">
-                    <div class="navbar">
-                        <div class="navbar-inner">
-                            <div class="left">
-                                <a href="#" class="link icon-only open-panel">
+                <div class="pages">
+                    <div class="page backGroundImage" data-page="index">
+                        <div class="navbar">
+                            <div class="navbar-inner">
+                                <div class="left">
+                                    <a href="#" class="link icon-only open-panel">
                                     <i class="icon icon-bars"></i>
-                                </a>
-                                Home
+                                </a> Home
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="page-content">
-                        <div class="content-block">
-                            <div class="ai-logo hCenter"><img src="lib/framework7/img/ai-logo-1.png" width="180"></div>
-                            <div class="buttons-row twoButtons hCenter">
-                                <a href="#" id="getPhoto" class="button button-raised button-big bg-lime" ><span class="color-black">Camera</span></a>
-                                <a href="#" id="openAlbum" class="button button-raised button-big bg-lime"><span class="color-black">Gallery</span></a>
+                        <div class="page-content">
+                            <div class="content-block">
+                                <div class="ai-logo hCenter"><img src="lib/framework7/img/ai-logo-1.png" width="180"></div>
+                                <div class="ai-text hCenter"><img src="lib/framework7/img/ai-logo-2.png" width="150"></div>
+                                <div class="buttons-row twoButtons hCenter">
+                                    <a href="#" id="getPhoto" class="camera-button floating-button color-14b9c8"><i class="icon material-icons md-30">photo_camera</i></a>
+                                    <a href="#" id="openAlbum" class="gallery-button floating-button color-14b9c8"><i class="icon material-icons md-30">photo_library</i></a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="popup-overlay"></div>
-
-    <script type="text/javascript"  src="cordova.js"></script>
-    <script type="text/javascript"  src="lib/framework7/js/framework7.min.js"></script>
-    <script type="text/javascript"  src="js/my-app.js"></script>
+        <div class="popup-overlay"></div>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
+        <script type="text/javascript" src="js/my-app.js"></script>
 </body>
 
 </html>
