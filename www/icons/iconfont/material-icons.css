@@ -40,3 +40,7 @@
 .material-icons.md-dark {
     color: rgba(0, 0, 0, 0.54);
 }
+
+.material-icons.md-30 {
+    font-size: 30px;
+}

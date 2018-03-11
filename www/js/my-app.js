@@ -187,8 +187,17 @@ function onDeviceReady() {
         //alert("error: "+err);
     }
 
-
     myApp.onPageInit("history", function() {
         getHistory();
     });
 }
+
+
+//////////////////////////////////////////////////////
+////////////////////////TESTING///////////////////////
+//////////////////////////////////////////////////////
+// var img_arg = '{"boxes":[[0.20688289403915405,0.02382335066795349,0.8024314045906067,0.9165056943893433]],"scores":[0.9100580811500549],"classes":[3],"display_string":["car: 91%"]}';
+
+// displayImage("test.jpg");
+
+// showDetectionResult(img_arg);
