@@ -1,3 +1,8 @@
+var tmp = prompt("enter server address:");
+const serverAddr = "http://" + tmp + ":8000/img3/";
+console.log(serverAddr);
+
+
 document.addEventListener("deviceready", onDeviceReady, false);
 
 // Initialize app
@@ -21,13 +26,15 @@ function onDeviceReady() {
     //     mainView.router.back();
     // });
 
+    var fileLocation;
+
     StatusBar.backgroundColorByHexString("#004D40");
 
     $$(document).on("click", "#getPhoto", function () {
 
         navigator.camera.getPicture(displayImage, errorCallback, {
             quality: 100,
-            saveToPhotoAlbum: false, //added
+            saveToPhotoAlbum: true, //added
             destinationType: Camera.DestinationType.FILE_URI,
             correctOrientation: true
         });
@@ -45,6 +52,7 @@ function onDeviceReady() {
 
 
     function displayImage(fileUri) {
+        fileLocation = fileUri;
         // mainView.router.load({pageName: 'send'});
         var popupHTML = '<div class="popup bg-black">' +
                         '    <div class="page-content page-content-for-send">' +
@@ -80,7 +88,7 @@ function onDeviceReady() {
                     reader.onloadend = function() {
                         var blob = new Blob([new Uint8Array(this.result)], { type: "image/png" });
                         var oReq = new XMLHttpRequest();
-                        oReq.open("POST", "http://10.176.66.155:8000/img3/", true);
+                        oReq.open("POST", serverAddr, true);
 
                         oReq.onload = function (oEvent) {
                             showDetectionResult(oReq.response);
@@ -112,6 +120,8 @@ function onDeviceReady() {
         drawBoxes(ctx, boxes, scores, classes, display_string, canvas.width, canvas.height);
 
         myApp.hideIndicator();
+
+        insertEntry(fileLocation, boxes, scores, classes, display_string);
     }
 
     function drawBoxes(ctx, boxes, scores, classes, display_string, canvas_width, canvas_height) {
@@ -176,14 +186,9 @@ function onDeviceReady() {
         //uncomment for debugging.
         //alert("error: "+err);
     }
+
+
+    myApp.onPageInit("history", function() {
+        getHistory();
+    });
 }
-
-
-//////////////////////////////////////////////////////
-////////////////////////TESTING///////////////////////
-//////////////////////////////////////////////////////
-// var img_arg = '{"boxes":[[0.20688289403915405,0.02382335066795349,0.8024314045906067,0.9165056943893433]],"scores":[0.9100580811500549],"classes":[3],"display_string":["car: 91%"]}';
-
-// displayImage("test.jpg");
-
-// showDetectionResult(img_arg);

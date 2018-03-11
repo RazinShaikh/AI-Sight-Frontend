@@ -36,3 +36,6 @@ npm-debug.log
 
 # res
 resources/signing
+
+.vs/
+.vscode/
