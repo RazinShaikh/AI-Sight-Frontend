@@ -61,11 +61,18 @@
     transform: translateX(-50%);
 }
 
-/* .vCenter {
+.vCenter {
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
-} */
+}
+
+.imgCenter {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
 
 .ai-logo {
     top: 20%;
@@ -98,4 +105,28 @@
 
 a.color-14b9c8 {
     background-color: #14b9c8;
+}
+
+
+.grid-container {
+    display: grid;
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-content: center;
+}
+
+.grid-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: white;
+    border: thin gray;
+    height: 130px;
+}
+
+.gridImg {
+    height: auto;
+    width: 100%;
 }

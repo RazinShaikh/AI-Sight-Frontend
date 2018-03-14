@@ -52,21 +52,51 @@ function insertEntry(imageURL, boxes, scores, classes, display_string) {
 
 }
 
-function getHistory() {
-    console.log("Getting history");
+function getHistory(searchTerm) {
+
+    document.getElementById("historyGrid").innerHTML = "";
+
     var store = getObjectStore(DB_STORE_NAME, 'readonly');
-    var request = store.openCursor(null, "prev");
+    var request;
+
+    if (searchTerm) {
+        var index = store.index("display_string");
+        var range = IDBKeyRange.bound(searchTerm, searchTerm + '\uffff');
+        request = index.openCursor(range);
+    } else {
+        request = store.openCursor(null, "prev");
+    }
+
+
+    request.onerror = function(event) {
+        console.log("Error in getting history");
+    };
 
     request.onsuccess = function(event) {
         var cursor = event.target.result;
-        
+    
         if (cursor) {
-            console.log("Current cursor: ", cursor);
+            // console.log("Current cursor: ", cursor);
             request = store.get(cursor.primaryKey);
             request.onsuccess = function(event) {
+
                 var value = event.target.result;
-                console.log(cursor.primaryKey + ": disp: " + value.display_string + ", boxes: " + value.boxes);
-                alert(cursor.primaryKey + ": disp: " + value.display_string + ", boxes: " + value.boxes);
+                var myJson = JSON.stringify(value);
+                
+                var newDiv = document.createElement("div");
+                newDiv.className += "grid-item";
+                var newImg = document.createElement("img");
+                newImg.src = value.imageURL;
+                newImg.id = "img" + cursor.primaryKey;
+                newImg.className += "gridImg";
+
+                newImg.onclick = function() {
+                    showImageHistory(value.id, myJson);
+                };
+
+                newDiv.appendChild(newImg);               
+
+                $$("#historyGrid").append(newDiv);
 
             };
 
@@ -75,31 +105,6 @@ function getHistory() {
             console.log("No more entries.");
         }
     };
-}
-
-function searchHistory(searchTerm) {
-    var store = getObjectStore(DB_STORE_NAME, 'readonly');
-    var index = store.index("display_string");
-    var range = IDBKeyRange.bound(searchTerm, searchTerm + '\uffff');
-
-    index.openCursor(range).onsuccess = function(event) {
-        var cursor = event.target.result;
-        
-        if (cursor) {
-            console.log("Current cursor: ", cursor);
-            request = store.get(cursor.primaryKey);
-            request.onsuccess = function(event) {
-                var value = event.target.result;
-                // console.log("value: " + value);
-                console.log(cursor.primaryKey + ": disp: " + value.display_string + ", boxes: " + value.boxes);
-                alert(cursor.primaryKey + ": disp: " + value.display_string + ", boxes: " + value.boxes);
-            };
-
-            cursor.continue();
-        } else {
-            console.log("No more entries.");
-        }
-    }
 }
 
 function getObjectStore(store_name, mode) {
@@ -111,5 +116,5 @@ openDb();
 
 function hist() {
     var term = $$("#searchbox").val();
-    searchHistory(term);
+    getHistory(term);
 }

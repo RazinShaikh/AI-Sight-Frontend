@@ -28,7 +28,7 @@ function onDeviceReady() {
 
     var fileLocation;
 
-    StatusBar.backgroundColorByHexString("#004D40");
+    StatusBar.backgroundColorByHexString("#0097A7");
 
     $$(document).on("click", "#getPhoto", function () {
 
@@ -56,8 +56,8 @@ function onDeviceReady() {
         // mainView.router.load({pageName: 'send'});
         var popupHTML = '<div class="popup bg-black">' +
                         '    <div class="page-content page-content-for-send">' +
-                        '        <img id="imgShow" class="imgShow hCenter vCenter" />' +
-                        '        <canvas id="myCanvas" class="myCanvas hCenter vCenter"> </canvas>' +
+                        '        <img id="imgShow" class="imgShow imgCenter" />' +
+                        '        <canvas id="myCanvas" class="myCanvas imgCenter"> </canvas>' +
                         '        <div href="#" class="close-popup">' +
                         '            <i class="icon material-icons md-dark closeIcon">cancel</i>' +
                         '        </div>' +
@@ -113,91 +113,130 @@ function onDeviceReady() {
         var display_string = imageJSON.display_string;
         var canvas = document.getElementById('myCanvas');
         var ctx = canvas.getContext('2d');
-
+    
         canvas.width = $$("#imgShow").width();
         canvas.height = $$("#imgShow").height();
-
+    
         drawBoxes(ctx, boxes, scores, classes, display_string, canvas.width, canvas.height);
-
+    
         myApp.hideIndicator();
-
+    
         insertEntry(fileLocation, boxes, scores, classes, display_string);
     }
 
-    function drawBoxes(ctx, boxes, scores, classes, display_string, canvas_width, canvas_height) {
-        var i, x, y, box_width, box_height;
-
-        ctx.lineWidth = "5";
-        var std_colors = [
-            'AliceBlue', 'Chartreuse', 'Aqua', 'Aquamarine', 'Azure', 'Beige', 'Bisque',
-            'BlanchedAlmond', 'BlueViolet', 'BurlyWood', 'CadetBlue', 'AntiqueWhite',
-            'Chocolate', 'Coral', 'CornflowerBlue', 'Cornsilk', 'Crimson', 'Cyan',
-            'DarkCyan', 'DarkGoldenRod', 'DarkGrey', 'DarkKhaki', 'DarkOrange',
-            'DarkOrchid', 'DarkSalmon', 'DarkSeaGreen', 'DarkTurquoise', 'DarkViolet',
-            'DeepPink', 'DeepSkyBlue', 'DodgerBlue', 'FireBrick', 'FloralWhite',
-            'ForestGreen', 'Fuchsia', 'Gainsboro', 'GhostWhite', 'Gold', 'GoldenRod',
-            'Salmon', 'Tan', 'HoneyDew', 'HotPink', 'IndianRed', 'Ivory', 'Khaki',
-            'Lavender', 'LavenderBlush', 'LawnGreen', 'LemonChiffon', 'LightBlue',
-            'LightCoral', 'LightCyan', 'LightGoldenRodYellow', 'LightGray', 'LightGrey',
-            'LightGreen', 'LightPink', 'LightSalmon', 'LightSeaGreen', 'LightSkyBlue',
-            'LightSlateGray', 'LightSlateGrey', 'LightSteelBlue', 'LightYellow', 'Lime',
-            'LimeGreen', 'Linen', 'Magenta', 'MediumAquaMarine', 'MediumOrchid',
-            'MediumPurple', 'MediumSeaGreen', 'MediumSlateBlue', 'MediumSpringGreen',
-            'MediumTurquoise', 'MediumVioletRed', 'MintCream', 'MistyRose', 'Moccasin',
-            'NavajoWhite', 'OldLace', 'Olive', 'OliveDrab', 'Orange', 'OrangeRed',
-            'Orchid', 'PaleGoldenRod', 'PaleGreen', 'PaleTurquoise', 'PaleVioletRed',
-            'PapayaWhip', 'PeachPuff', 'Peru', 'Pink', 'Plum', 'PowderBlue', 'Purple',
-            'Red', 'RosyBrown', 'RoyalBlue', 'SaddleBrown', 'Green', 'SandyBrown',
-            'SeaGreen', 'SeaShell', 'Sienna', 'Silver', 'SkyBlue', 'SlateBlue',
-            'SlateGray', 'SlateGrey', 'Snow', 'SpringGreen', 'SteelBlue', 'GreenYellow',
-            'Teal', 'Thistle', 'Tomato', 'Turquoise', 'Violet', 'Wheat', 'White',
-            'WhiteSmoke', 'Yellow', 'YellowGreen'
-        ];
-
-        for (i = 0; i < boxes.length; i++) {
-
-            x = boxes[i][1] * canvas_width;
-            y = boxes[i][0] * canvas_height;
-            box_width = (boxes[i][3] - boxes[i][1]) * canvas_width;
-            box_height = (boxes[i][2] - boxes[i][0]) * canvas_height;
-
-            var color = std_colors[classes[i] % std_colors.length];
-            ctx.beginPath();
-
-            ctx.strokeStyle = color;
-            
-            ctx.rect(x, y, box_width, box_height);
-
-            ctx.fillStyle = color;
-
-            var textwidth = ctx.measureText(display_string[i]).width;
-
-            ctx.fillRect(x, y-18, textwidth, 18);
-
-            ctx.fillStyle = 'black';
-
-            ctx.font = "Arial";
-            ctx.fillText(display_string[i], x, y-9);
-            ctx.stroke();
-        }
-    }
 
     function errorCallback(err) {
-        //uncomment for debugging.
-        //alert("error: "+err);
+        console.log("error: "+err);
     }
 
     myApp.onPageInit("history", function() {
         getHistory();
     });
+
+    myApp.onPageAfterAnimation('index', function (page){
+        $$('.page-on-left').remove();
+    });
+
 }
 
 
-//////////////////////////////////////////////////////
-////////////////////////TESTING///////////////////////
-//////////////////////////////////////////////////////
-// var img_arg = '{"boxes":[[0.20688289403915405,0.02382335066795349,0.8024314045906067,0.9165056943893433]],"scores":[0.9100580811500549],"classes":[3],"display_string":["car: 91%"]}';
 
-// displayImage("test.jpg");
 
-// showDetectionResult(img_arg);
+function showDetectionResult2(img_arg) {
+
+    var imageJSON = JSON.parse(img_arg);
+    var boxes = imageJSON.boxes;
+    var scores = imageJSON.scores;
+    var classes = imageJSON.classes;
+    var display_string = imageJSON.display_string;
+    var canvas = document.getElementById('myCanvas');
+    var ctx = canvas.getContext('2d');
+
+    canvas.width = $$("#imgShow").width();
+    canvas.height = $$("#imgShow").height();
+
+    drawBoxes(ctx, boxes, scores, classes, display_string, canvas.width, canvas.height);
+}
+
+function drawBoxes(ctx, boxes, scores, classes, display_string, canvas_width, canvas_height) {
+    var i, x, y, box_width, box_height;
+
+    ctx.lineWidth = "5";
+    var std_colors = [
+        'AliceBlue', 'Chartreuse', 'Aqua', 'Aquamarine', 'Azure', 'Beige', 'Bisque',
+        'BlanchedAlmond', 'BlueViolet', 'BurlyWood', 'CadetBlue', 'AntiqueWhite',
+        'Chocolate', 'Coral', 'CornflowerBlue', 'Cornsilk', 'Crimson', 'Cyan',
+        'DarkCyan', 'DarkGoldenRod', 'DarkGrey', 'DarkKhaki', 'DarkOrange',
+        'DarkOrchid', 'DarkSalmon', 'DarkSeaGreen', 'DarkTurquoise', 'DarkViolet',
+        'DeepPink', 'DeepSkyBlue', 'DodgerBlue', 'FireBrick', 'FloralWhite',
+        'ForestGreen', 'Fuchsia', 'Gainsboro', 'GhostWhite', 'Gold', 'GoldenRod',
+        'Salmon', 'Tan', 'HoneyDew', 'HotPink', 'IndianRed', 'Ivory', 'Khaki',
+        'Lavender', 'LavenderBlush', 'LawnGreen', 'LemonChiffon', 'LightBlue',
+        'LightCoral', 'LightCyan', 'LightGoldenRodYellow', 'LightGray', 'LightGrey',
+        'LightGreen', 'LightPink', 'LightSalmon', 'LightSeaGreen', 'LightSkyBlue',
+        'LightSlateGray', 'LightSlateGrey', 'LightSteelBlue', 'LightYellow', 'Lime',
+        'LimeGreen', 'Linen', 'Magenta', 'MediumAquaMarine', 'MediumOrchid',
+        'MediumPurple', 'MediumSeaGreen', 'MediumSlateBlue', 'MediumSpringGreen',
+        'MediumTurquoise', 'MediumVioletRed', 'MintCream', 'MistyRose', 'Moccasin',
+        'NavajoWhite', 'OldLace', 'Olive', 'OliveDrab', 'Orange', 'OrangeRed',
+        'Orchid', 'PaleGoldenRod', 'PaleGreen', 'PaleTurquoise', 'PaleVioletRed',
+        'PapayaWhip', 'PeachPuff', 'Peru', 'Pink', 'Plum', 'PowderBlue', 'Purple',
+        'Red', 'RosyBrown', 'RoyalBlue', 'SaddleBrown', 'Green', 'SandyBrown',
+        'SeaGreen', 'SeaShell', 'Sienna', 'Silver', 'SkyBlue', 'SlateBlue',
+        'SlateGray', 'SlateGrey', 'Snow', 'SpringGreen', 'SteelBlue', 'GreenYellow',
+        'Teal', 'Thistle', 'Tomato', 'Turquoise', 'Violet', 'Wheat', 'White',
+        'WhiteSmoke', 'Yellow', 'YellowGreen'
+    ];
+
+    for (i = 0; i < boxes.length; i++) {
+
+        x = boxes[i][1] * canvas_width;
+        y = boxes[i][0] * canvas_height;
+        box_width = (boxes[i][3] - boxes[i][1]) * canvas_width;
+        box_height = (boxes[i][2] - boxes[i][0]) * canvas_height;
+
+        var color = std_colors[classes[i] % std_colors.length];
+        ctx.beginPath();
+
+        ctx.strokeStyle = color;
+        
+        ctx.rect(x, y, box_width, box_height);
+
+        ctx.fillStyle = color;
+
+        var textwidth = ctx.measureText(display_string[i]).width;
+
+        ctx.fillRect(x, y-18, textwidth, 18);
+
+        ctx.fillStyle = 'black';
+
+        ctx.font = "Arial";
+        ctx.fillText(display_string[i], x, y-9);
+        ctx.stroke();
+    }
+}
+
+
+
+
+function showImageHistory(key, myJson) {
+    var img = document.getElementById("img" + key);
+
+    var popupHTML = '<div class="popup bg-black">' +
+                    '    <div class="page-content page-content-for-send">' +
+                    '        <img id="imgShow" class="imgShow imgCenter" />' +
+                    '        <canvas id="myCanvas" class="myCanvas imgCenter"> </canvas>' +
+                    '        <div href="#" class="close-popup">' +
+                    '            <i class="icon material-icons md-dark closeIcon">cancel</i>' +
+                    '        </div>' +
+                    '    </div>' +
+                    '</div>';
+                    
+    myApp.popup(popupHTML);
+    
+    $$('#imgShow').attr('src', img.src);
+
+    console.log(myJson);
+
+    showDetectionResult2(myJson);
+}
