@@ -7,6 +7,7 @@ document.addEventListener("deviceready", onDeviceReady, false);
 
 // Initialize app
 var myApp = new Framework7({
+    pushState: true,
     swipePanel:'left',
     swipePanelActiveArea: 24,
     material:true,
@@ -21,10 +22,6 @@ var mainView = myApp.addView('.view-main', {
 
 function onDeviceReady() {
     // Now safe to use device APIs
-
-    // document.addEventListener('backbutton', function (e) {
-    //     mainView.router.back();
-    // });
 
     var fileLocation;
 
