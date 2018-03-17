@@ -1,5 +1,6 @@
 .myCanvas {
     z-index: 20;
+    pointer-events: none;
 }
 
 .imgShow {
@@ -69,9 +70,6 @@
 
 .imgCenter {
     position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
 }
 
 .ai-logo {
@@ -129,4 +127,10 @@ a.color-14b9c8 {
 .gridImg {
     height: auto;
     width: 100%;
+}
+
+.animate {
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    transition: all .3s ease-in-out;
 }

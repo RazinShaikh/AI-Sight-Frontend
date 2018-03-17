@@ -50,7 +50,7 @@ function onDeviceReady() {
 
     function displayImage(fileUri) {
         fileLocation = fileUri;
-        // mainView.router.load({pageName: 'send'});
+
         var popupHTML = '<div class="popup bg-black">' +
                         '    <div class="page-content page-content-for-send">' +
                         '        <img id="imgShow" class="imgShow imgCenter" />' +
@@ -66,11 +66,21 @@ function onDeviceReady() {
                         '</div>';
                         
         myApp.popup(popupHTML);
-        $$('#imgShow').attr('src', fileUri);
+        var image = document.getElementById("imgShow");
+        var canvas = document.getElementById("canvas");
+        image.src = fileLocation;    
+
+        image.onload = function() {
+        
+            $$('.imgCenter').css('top', (window.innerHeight - image.height) / 2 + 'px');
+    
+            gesturesInit(image, canvas);
+        };
 
         $$('#sendButton').on("click", function() {
             $$('#sendButton').hide();
             myApp.showIndicator();
+            gesturesDestroy();
             sendImage(fileUri);
         });
     }
@@ -110,6 +120,8 @@ function onDeviceReady() {
         var display_string = imageJSON.display_string;
         var canvas = document.getElementById('myCanvas');
         var ctx = canvas.getContext('2d');
+        var image = document.getElementById("imgShow");
+
     
         canvas.width = $$("#imgShow").width();
         canvas.height = $$("#imgShow").height();
@@ -117,6 +129,8 @@ function onDeviceReady() {
         drawBoxes(ctx, boxes, scores, classes, display_string, canvas.width, canvas.height);
     
         myApp.hideIndicator();
+
+        gesturesInit(image, canvas);
     
         insertEntry(fileLocation, boxes, scores, classes, display_string);
     }
@@ -230,10 +244,17 @@ function showImageHistory(key, myJson) {
                     '</div>';
                     
     myApp.popup(popupHTML);
+
+    var image = document.getElementById("imgShow");
+    var canvas = document.getElementById("myCanvas");
+    image.src = img.src;
     
-    $$('#imgShow').attr('src', img.src);
-
-    console.log(myJson);
-
     showDetectionResult2(myJson);
+
+    image.onload = function() {
+        
+        $$('.imgCenter').css('top', (window.innerHeight - image.height) / 2 + 'px');
+
+        gesturesInit(image, canvas);
+    };
 }
