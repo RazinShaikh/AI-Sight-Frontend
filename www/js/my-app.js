@@ -50,17 +50,17 @@ function onDeviceReady() {
 
     function displayImage(fileUri) {
         fileLocation = fileUri;
-
-        var popupHTML = '<div class="popup bg-black">' +
+        // mainView.router.load({pageName: 'send'});
+        var popupHTML = '<div class="popup backGroundImage">' +
                         '    <div class="page-content page-content-for-send">' +
                         '        <img id="imgShow" class="imgShow imgCenter" />' +
                         '        <canvas id="myCanvas" class="myCanvas imgCenter"> </canvas>' +
                         '        <div href="#" class="close-popup">' +
-                        '            <i class="icon material-icons md-dark closeIcon">cancel</i>' +
+                        '            <i class="icon material-icons md-dark md-30 closeIcon">cancel</i>' +
                         '        </div>' +
                         '        <!-- TODO: Use the send icon instead of button -->' +
-                        '        <a href="#" id="sendButton" class="button button-big button-fill button-raised color-white sendButton  hCenter">' +
-                        '            <span class="color-black">Detect</span>' +
+                        '        <a href="#" id="sendButton" class="floating-button color-14b9c8">' +
+                        '            <i class="icon material-icons md-30">send</i>' +
                         '        </a>' +
                         '    </div>' +
                         '</div>';
@@ -233,12 +233,12 @@ function drawBoxes(ctx, boxes, scores, classes, display_string, canvas_width, ca
 function showImageHistory(key, myJson) {
     var img = document.getElementById("img" + key);
 
-    var popupHTML = '<div class="popup bg-black">' +
+    var popupHTML = '<div class="popup backGroundImage">' +
                     '    <div class="page-content page-content-for-send">' +
                     '        <img id="imgShow" class="imgShow imgCenter" />' +
                     '        <canvas id="myCanvas" class="myCanvas imgCenter"> </canvas>' +
                     '        <div href="#" class="close-popup">' +
-                    '            <i class="icon material-icons md-dark closeIcon">cancel</i>' +
+                    '            <i class="icon material-icons md-dark md-30 closeIcon">cancel</i>' +
                     '        </div>' +
                     '    </div>' +
                     '</div>';
