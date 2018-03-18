@@ -7,6 +7,7 @@ document.addEventListener("deviceready", onDeviceReady, false);
 
 // Initialize app
 var myApp = new Framework7({
+    pushState: true,
     swipePanel:'left',
     swipePanelActiveArea: 24,
     material:true,
@@ -21,10 +22,6 @@ var mainView = myApp.addView('.view-main', {
 
 function onDeviceReady() {
     // Now safe to use device APIs
-
-    // document.addEventListener('backbutton', function (e) {
-    //     mainView.router.back();
-    // });
 
     var fileLocation;
 
@@ -54,26 +51,36 @@ function onDeviceReady() {
     function displayImage(fileUri) {
         fileLocation = fileUri;
         // mainView.router.load({pageName: 'send'});
-        var popupHTML = '<div class="popup bg-black">' +
+        var popupHTML = '<div class="popup backGroundImage">' +
                         '    <div class="page-content page-content-for-send">' +
                         '        <img id="imgShow" class="imgShow imgCenter" />' +
                         '        <canvas id="myCanvas" class="myCanvas imgCenter"> </canvas>' +
                         '        <div href="#" class="close-popup">' +
-                        '            <i class="icon material-icons md-dark closeIcon">cancel</i>' +
+                        '            <i class="icon material-icons md-dark md-30 closeIcon">cancel</i>' +
                         '        </div>' +
                         '        <!-- TODO: Use the send icon instead of button -->' +
-                        '        <a href="#" id="sendButton" class="button button-big button-fill button-raised color-white sendButton  hCenter">' +
-                        '            <span class="color-black">Detect</span>' +
+                        '        <a href="#" id="sendButton" class="floating-button color-14b9c8">' +
+                        '            <i class="icon material-icons md-30">send</i>' +
                         '        </a>' +
                         '    </div>' +
                         '</div>';
                         
         myApp.popup(popupHTML);
-        $$('#imgShow').attr('src', fileUri);
+        var image = document.getElementById("imgShow");
+        var canvas = document.getElementById("canvas");
+        image.src = fileLocation;    
+
+        image.onload = function() {
+        
+            $$('.imgCenter').css('top', (window.innerHeight - image.height) / 2 + 'px');
+    
+            gesturesInit(image, canvas);
+        };
 
         $$('#sendButton').on("click", function() {
             $$('#sendButton').hide();
             myApp.showIndicator();
+            gesturesDestroy();
             sendImage(fileUri);
         });
     }
@@ -113,6 +120,8 @@ function onDeviceReady() {
         var display_string = imageJSON.display_string;
         var canvas = document.getElementById('myCanvas');
         var ctx = canvas.getContext('2d');
+        var image = document.getElementById("imgShow");
+
     
         canvas.width = $$("#imgShow").width();
         canvas.height = $$("#imgShow").height();
@@ -120,6 +129,8 @@ function onDeviceReady() {
         drawBoxes(ctx, boxes, scores, classes, display_string, canvas.width, canvas.height);
     
         myApp.hideIndicator();
+
+        gesturesInit(image, canvas);
     
         insertEntry(fileLocation, boxes, scores, classes, display_string);
     }
@@ -222,21 +233,28 @@ function drawBoxes(ctx, boxes, scores, classes, display_string, canvas_width, ca
 function showImageHistory(key, myJson) {
     var img = document.getElementById("img" + key);
 
-    var popupHTML = '<div class="popup bg-black">' +
+    var popupHTML = '<div class="popup backGroundImage">' +
                     '    <div class="page-content page-content-for-send">' +
                     '        <img id="imgShow" class="imgShow imgCenter" />' +
                     '        <canvas id="myCanvas" class="myCanvas imgCenter"> </canvas>' +
                     '        <div href="#" class="close-popup">' +
-                    '            <i class="icon material-icons md-dark closeIcon">cancel</i>' +
+                    '            <i class="icon material-icons md-dark md-30 closeIcon">cancel</i>' +
                     '        </div>' +
                     '    </div>' +
                     '</div>';
                     
     myApp.popup(popupHTML);
+
+    var image = document.getElementById("imgShow");
+    var canvas = document.getElementById("myCanvas");
+    image.src = img.src;
     
-    $$('#imgShow').attr('src', img.src);
-
-    console.log(myJson);
-
     showDetectionResult2(myJson);
+
+    image.onload = function() {
+        
+        $$('.imgCenter').css('top', (window.innerHeight - image.height) / 2 + 'px');
+
+        gesturesInit(image, canvas);
+    };
 }

@@ -1,11 +1,13 @@
 .myCanvas {
     z-index: 20;
+    pointer-events: none;
 }
 
 .imgShow {
     z-index: 1;
     max-width: 100%;
     max-height: 100%;
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.25), 0 0px 10px 1px rgba(0, 0, 0, 0.25);
 }
 
 .sendButton {
@@ -51,7 +53,7 @@
     right: 6%;
     top: 4%;
     z-index: 40;
-    color: rgba(255, 255, 255, 0.6) !important;
+    /*color: rgba(255, 255, 255, 0.6) !important;*/
     font-size: 30px;
 }
 
@@ -69,9 +71,6 @@
 
 .imgCenter {
     position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
 }
 
 .ai-logo {
@@ -103,6 +102,15 @@
     box-shadow: 0 6px 20px rgba(0,0,0,.19), 0 3px 6px rgba(0,0,0,.23);
 }
 
+#sendButton {
+    position: absolute;
+    left: 270px;
+    top: 625px;
+    width: 72px;
+    height: 72px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.19), 0 3px 6px rgba(0,0,0,.23);
+}
+
 a.color-14b9c8 {
     background-color: #14b9c8;
 }
@@ -129,4 +137,10 @@ a.color-14b9c8 {
 .gridImg {
     height: auto;
     width: 100%;
+}
+
+.animate {
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    transition: all .3s ease-in-out;
 }
