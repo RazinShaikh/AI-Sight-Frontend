@@ -58,11 +58,14 @@ function getHistory(searchTerm) {
 
     var store = getObjectStore(DB_STORE_NAME, 'readonly');
     var request;
+    var lastLabel;
+    var lowerTerm;
 
     if (searchTerm) {
+        lowerTerm = searchTerm.toLowerCase();
         var index = store.index("display_string");
-        var range = IDBKeyRange.bound(searchTerm, searchTerm + '\uffff');
-        request = index.openCursor(range);
+        var range = IDBKeyRange.bound(lowerTerm, lowerTerm + '\uffff');
+        request = index.openCursor(range, "prev");
     } else {
         request = store.openCursor(null, "prev");
     }
@@ -74,15 +77,22 @@ function getHistory(searchTerm) {
 
     request.onsuccess = function(event) {
         var cursor = event.target.result;
-    
+
         if (cursor) {
+            var currentKey = cursor.key+'';
+            currentLabel = (currentKey.split(":"))[0];
             // console.log("Current cursor: ", cursor);
+            if (currentLabel == lastLabel) {
+                console.log("Identical label detected, current cursor: ", cursor);
+                cursor.continue();
+            }
+            currentLabel = lastLabel;
             request = store.get(cursor.primaryKey);
             request.onsuccess = function(event) {
 
                 var value = event.target.result;
                 var myJson = JSON.stringify(value);
-                
+
                 var newDiv = document.createElement("div");
                 newDiv.className += "grid-item";
                 var newImg = document.createElement("img");
@@ -94,7 +104,7 @@ function getHistory(searchTerm) {
                     showImageHistory(value.id, myJson);
                 };
 
-                newDiv.appendChild(newImg);               
+                newDiv.appendChild(newImg);
 
                 $$("#historyGrid").append(newDiv);
 
