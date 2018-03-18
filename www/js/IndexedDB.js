@@ -86,7 +86,7 @@ function getHistory(searchTerm) {
                 console.log("Identical label detected, current cursor: ", cursor);
                 cursor.continue();
             }
-            currentLabel = lastLabel;
+            lastLabel = currentLabel;
             request = store.get(cursor.primaryKey);
             request.onsuccess = function(event) {
 
