@@ -56,7 +56,7 @@ function onDeviceReady() {
                         '        <img id="imgShow" class="imgShow imgCenter" />' +
                         '        <canvas id="myCanvas" class="myCanvas imgCenter"> </canvas>' +
                         '        <div href="#" class="close-popup">' +
-                        '            <i class="icon material-icons md-dark md-30 closeIcon">cancel</i>' +
+                        '            <i class="icon material-icons md-dark md-40 closeIcon">cancel</i>' +
                         '        </div>' +
                         '        <!-- TODO: Use the send icon instead of button -->' +
                         '        <a href="#" id="sendButton" class="floating-button color-14b9c8">' +
