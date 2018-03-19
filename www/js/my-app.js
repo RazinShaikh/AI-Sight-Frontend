@@ -111,6 +111,27 @@ function onDeviceReady() {
             errorCallback);
     }
 
+
+
+    function speakResults(results) {
+
+        var i = 0;
+
+        var s = function () {
+            if (i < results.length) {
+                i++;
+                TTS.speak(results[i-1].split(":")[0], s, err);
+            }
+        };
+
+        
+        function err(reason) {
+            console.log("error: " + reason);
+        }
+        
+        s();
+    }
+
     function showDetectionResult(img_arg) {
 
         var imageJSON = JSON.parse(img_arg);
@@ -131,6 +152,8 @@ function onDeviceReady() {
         myApp.hideIndicator();
 
         gesturesInit(image, canvas);
+
+        speakResults(display_string);
     
         insertEntry(fileLocation, boxes, scores, classes, display_string);
     }
