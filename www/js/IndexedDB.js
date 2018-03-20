@@ -59,6 +59,7 @@ function getHistory(searchTerm) {
     var store = getObjectStore(DB_STORE_NAME, 'readonly');
     var request;
     var lastLabel;
+    var lastPrimaryKey;
     var lowerTerm;
 
     if (searchTerm) {
@@ -79,14 +80,17 @@ function getHistory(searchTerm) {
         var cursor = event.target.result;
 
         if (cursor) {
+            var currentPrimaryKey = cursor.primaryKey;
             var currentKey = cursor.key+'';
             currentLabel = (currentKey.split(":"))[0];
             // console.log("Current cursor: ", cursor);
-            if (currentLabel == lastLabel) {
+            if (currentLabel == lastLabel && currentPrimaryKey == lastPrimaryKey) {
                 console.log("Identical label detected, current cursor: ", cursor);
                 cursor.continue();
+                return;
             }
             lastLabel = currentLabel;
+            lastPrimaryKey = currentPrimaryKey;
             request = store.get(cursor.primaryKey);
             request.onsuccess = function(event) {
 
@@ -100,9 +104,15 @@ function getHistory(searchTerm) {
                 newImg.id = "img" + cursor.primaryKey;
                 newImg.className += "gridImg";
 
-                newImg.onclick = function() {
-                    showImageHistory(value.id, myJson);
-                };
+                if (searchTerm) {
+                    newImg.onclick = function() {
+                        showImageHistory(value.id, myJson, lowerTerm);
+                    };
+                } else {
+                    newImg.onclick = function() {
+                        showImageHistory(value.id, myJson);
+                    };
+                }
 
                 newDiv.appendChild(newImg);
 

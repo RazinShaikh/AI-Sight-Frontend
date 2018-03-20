@@ -176,7 +176,7 @@ function onDeviceReady() {
 
 
 
-function showDetectionResult2(img_arg) {
+function showDetectionResult2(img_arg, searchTerm) {
 
     var imageJSON = JSON.parse(img_arg);
     var boxes = imageJSON.boxes;
@@ -189,10 +189,10 @@ function showDetectionResult2(img_arg) {
     canvas.width = $$("#imgShow").width();
     canvas.height = $$("#imgShow").height();
 
-    drawBoxes(ctx, boxes, scores, classes, display_string, canvas.width, canvas.height);
+    drawBoxes(ctx, boxes, scores, classes, display_string, canvas.width, canvas.height, searchTerm);
 }
 
-function drawBoxes(ctx, boxes, scores, classes, display_string, canvas_width, canvas_height) {
+function drawBoxes(ctx, boxes, scores, classes, display_string, canvas_width, canvas_height, searchTerm) {
     var i, x, y, box_width, box_height;
 
     ctx.lineWidth = "5";
@@ -224,6 +224,10 @@ function drawBoxes(ctx, boxes, scores, classes, display_string, canvas_width, ca
 
     for (i = 0; i < boxes.length; i++) {
 
+        if (searchTerm && display_string[i].indexOf(searchTerm) == -1) {
+            continue;
+        }
+
         x = boxes[i][1] * canvas_width;
         y = boxes[i][0] * canvas_height;
         box_width = (boxes[i][3] - boxes[i][1]) * canvas_width;
@@ -253,7 +257,7 @@ function drawBoxes(ctx, boxes, scores, classes, display_string, canvas_width, ca
 
 
 
-function showImageHistory(key, myJson) {
+function showImageHistory(key, myJson, searchTerm) {
     var img = document.getElementById("img" + key);
 
     var popupHTML = '<div class="popup backGroundImage">' +
@@ -272,7 +276,7 @@ function showImageHistory(key, myJson) {
     var canvas = document.getElementById("myCanvas");
     image.src = img.src;
     
-    showDetectionResult2(myJson);
+    showDetectionResult2(myJson, searchTerm);
 
     image.onload = function() {
         
