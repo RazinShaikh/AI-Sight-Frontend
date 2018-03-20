@@ -4,17 +4,15 @@
             <div class="left">
                 <a href="#" class="link icon-only open-panel">
                     <i class="icon icon-bars"></i>
-                </a>
-                History
+                </a> History
             </div>
         </div>
     </div>
-
     <div class="page-content">
-        <input type="text" name="search" id="searchbox">
-        <input type="submit" value="Search" onclick="hist()">
-
-
+        <form class="search-container">
+            <input type="text" name="search" id="searchbox" placeholder="Search">
+            <a href="#" type="submit" onclick="hist()"><i class="icon material-icons md-dark search-icon md-30">search</i></a>
+        </form>
         <div class="grid-container" id="historyGrid"></div>
     </div>
 </div>
