@@ -51,26 +51,25 @@
         <div class="view view-main">
             <!-- Pages container, because we use fixed navbar, it has additional appropriate classes-->
             <div class="pages navbar-fixed">
-                <div class="page backGroundImage" data-page="index">
+                <div class="page transparent" data-page="index">
                     <div class="navbar">
                         <div class="navbar-inner">
                             <div class="left">
                                 <a href="#" class="link icon-only open-panel">
                                 <i class="icon icon-bars"></i>
-                            </a> Home
+                            </a>
                             </div>
                         </div>
                     </div>
-                    <div class="page-content">
-                        <div class="content-block">
-                            <div class="ai-logo hCenter"><img src="lib/framework7/img/ai-logo-1.png" width="180"></div>
-                            <div class="ai-text hCenter"><img src="lib/framework7/img/ai-logo-2.png" width="150"></div>
-                            <div class="buttons-row twoButtons hCenter">
-                                <a href="#" id="getPhoto" class="camera-button floating-button color-14b9c8"><i class="icon material-icons md-30">photo_camera</i></a>
-                                <a href="#" id="openAlbum" class="gallery-button floating-button color-14b9c8"><i class="icon material-icons md-30">photo_library</i></a>
-                            </div>
-                        </div>
-                    </div>
+                    <img id="imgjs" class="imgjs" width="100%" height="100%" style="display: none">
+                    <canvas id="camCanvas" class="camCanvas" width="100%" height="100%"></canvas>
+                    <div id="clickarea" class="clickarea"></div>
+                    <a href="#" id="takePhoto" class="floating-button color-14b9c8 camera-button hCenter" onclick="{captureButton()}">
+                        <i class="icon material-icons md-40">photo_camera</i>
+                    </a>
+                    <a href="#" id="openAlbum" class="floating-button color-14b9c8 gallery-button">
+                        <i class="icon material-icons md-30">photo_library</i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -84,6 +83,8 @@
     <script type="text/javascript"  src="js/gestures.js"></script>
     <script type="text/javascript"  src="js/my-app.js"></script>
     <script type="text/javascript"  src="js/IndexedDB.js"></script>
+    <script type="text/javascript"  src="js/cameraGestures.js"></script>
+    
 </body>
 
 </html>

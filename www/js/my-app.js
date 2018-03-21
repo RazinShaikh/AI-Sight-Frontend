@@ -1,5 +1,5 @@
-var tmp = prompt("enter server address:");
-const serverAddr = "http://" + tmp + ":8000/img3/";
+// var tmp = prompt("enter server address:");
+const serverAddr = "http://10.6.1.101:8000/img/";
 console.log(serverAddr);
 
 
@@ -20,6 +20,8 @@ var mainView = myApp.addView('.view-main', {
     dynamicNavbar: true
 });
 
+var cameraOrResult = true; // true = camera page, false = result page.
+
 function onDeviceReady() {
     // Now safe to use device APIs
 
@@ -27,110 +29,25 @@ function onDeviceReady() {
 
     StatusBar.backgroundColorByHexString("#0097A7");
 
-    $$(document).on("click", "#getPhoto", function () {
-
-        navigator.camera.getPicture(displayImage, errorCallback, {
-            quality: 100,
-            saveToPhotoAlbum: true, //added
-            destinationType: Camera.DestinationType.FILE_URI,
-            correctOrientation: true
-        });
+    CameraPreview.startCamera({
+        camera: CameraPreview.CAMERA_DIRECTION.BACK,
+        toBack: true,
+        tapPhoto: true,
     });
+
+    var clickarea = document.getElementById('clickarea');
+    camGestureInit(clickarea);
 
     $$(document).on("click", "#openAlbum", function () {
 
-        navigator.camera.getPicture(displayImage, errorCallback, {
+        navigator.camera.getPicture(galleryImage, errorCallback, {
             quality: 50,
             sourceType : Camera.PictureSourceType.SAVEDPHOTOALBUM,
-            destinationType: Camera.DestinationType.FILE_URI,
+            destinationType: Camera.DestinationType.DATA_URL,
             correctOrientation: true
         });
     });
 
-
-    function displayImage(fileUri) {
-        fileLocation = fileUri;
-        // mainView.router.load({pageName: 'send'});
-        var popupHTML = '<div class="popup backGroundImage">' +
-                        '    <div class="page-content page-content-for-send">' +
-                        '        <img id="imgShow" class="imgShow imgCenter" />' +
-                        '        <canvas id="myCanvas" class="myCanvas imgCenter"> </canvas>' +
-                        '        <div href="#" class="close-popup">' +
-                        '            <i class="icon material-icons md-dark md-40 closeIcon">cancel</i>' +
-                        '        </div>' +
-                        '        <!-- TODO: Use the send icon instead of button -->' +
-                        '        <a href="#" id="sendButton" class="floating-button color-14b9c8">' +
-                        '            <i class="icon material-icons md-30">send</i>' +
-                        '        </a>' +
-                        '    </div>' +
-                        '</div>';
-                        
-        myApp.popup(popupHTML);
-        var image = document.getElementById("imgShow");
-        var canvas = document.getElementById("canvas");
-        image.src = fileLocation;    
-
-        image.onload = function() {
-        
-            $$('.imgCenter').css('top', (window.innerHeight - image.height) / 2 + 'px');
-    
-            gesturesInit(image, canvas);
-        };
-
-        $$('#sendButton').on("click", function() {
-            $$('#sendButton').hide();
-            myApp.showIndicator();
-            gesturesDestroy();
-            sendImage(fileUri);
-        });
-    }
-
-    function sendImage(fileUri) {
-        window.resolveLocalFileSystemURL(
-            fileUri,
-            function (fileEntry) {
-                fileEntry.file(function (file) {
-                    var reader = new FileReader();
-
-                    reader.onloadend = function() {
-                        var blob = new Blob([new Uint8Array(this.result)], { type: "image/png" });
-                        var oReq = new XMLHttpRequest();
-                        oReq.open("POST", serverAddr, true);
-
-                        oReq.onload = function (oEvent) {
-                            showDetectionResult(oReq.response);
-                        };
-                        // Pass the blob in to XHR's send method
-                        oReq.send(blob);
-                    };
-
-                    reader.readAsArrayBuffer(file);
-
-                }, errorCallback);
-            },
-            errorCallback);
-    }
-
-
-
-    function speakResults(results) {
-
-        var i = 0;
-
-        var s = function () {
-            if (i < results.length) {
-                i++;
-                TTS.speak(results[i-1].split(":")[0], s, err);
-            }
-        };
-
-        
-        function err(reason) {
-            console.log("error: " + reason);
-        }
-        
-        s();
-    }
 
     function showDetectionResult(img_arg) {
 
@@ -173,7 +90,97 @@ function onDeviceReady() {
 
 }
 
+function speakResults(results) {
+    var i = 0;
+    var s = function () {
+        if (i < results.length) {
+            i++;
+            TTS.speak(results[i-1].split(":")[0], s, err);
+        }
+    };
 
+    function err(reason) {
+        console.log("error: " + reason);
+    }
+    
+    s();
+}
+
+function galleryImage(base64Img) {
+    myApp.showIndicator();
+    b64src = 'data:image/jpeg;base64,'+base64Img;
+    $$('#clickarea').hide();
+    $$('#imgjs').show();
+    $$('#imgjs').attr('src',b64src);
+    sendImage(base64Img);
+    cameraOrResult = false;
+}
+
+
+function capture() {
+    myApp.showIndicator();
+    console.log("function called.");
+    CameraPreview.takePicture({},function(base64Img) {
+        b64src = 'data:image/jpeg;base64,'+base64Img;
+        $$('#clickarea').hide();
+        $$('#imgjs').show();
+        $$('#imgjs').attr('src',b64src);
+        sendImage(base64Img);
+        cameraOrResult = false;
+    });
+}
+
+function sendImage(image_b64) {
+    console.log("Sending image...");
+    var imgdata = '{ "img" : "' + image_b64 + '" }';
+    $$.ajax({
+        datatype: 'json',
+        type: 'POST',
+        data: imgdata,
+        url: serverAddr,
+        success: handleResponse,
+        error: function(){
+            myApp.dialog.alert("Sorry, something went wrong.", "Error");
+            myApp.hideIndicator();
+        }
+    });
+}
+
+function handleResponse(result) {
+    $$('#camCanvas').show();
+
+    var imageJSON = JSON.parse(result);
+    var boxes = imageJSON.boxes;
+    var scores = imageJSON.scores;
+    var classes = imageJSON.classes;
+    var display_string = imageJSON.display_string;
+    var canvas = document.getElementById('camCanvas');
+    var ctx = canvas.getContext('2d');
+    var image = document.getElementById('imgjs');
+
+    canvas.width = $$("#imgjs").width();
+    canvas.height = $$("#imgjs").height();
+
+    drawBoxes(ctx, boxes, scores, classes, display_string, canvas.width, canvas.height);
+    myApp.hideIndicator();
+
+    gesturesInit(image, canvas);
+    speakResults(display_string);
+}
+
+function captureButton() {
+    if (cameraOrResult) {
+        console.log("capturing...");
+        capture();
+    } else {
+        console.log("going to camera...");
+        gesturesDestroy();
+        $$('#imgjs').hide();
+        $$('#camCanvas').hide();
+        $$('#clickarea').show();
+        cameraOrResult = true;
+    }
+}
 
 
 function showDetectionResult2(img_arg, searchTerm) {
