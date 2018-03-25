@@ -1,5 +1,4 @@
-var tmp = prompt("enter server address:");
-const serverAddr = "http://" + tmp + ":8000/img/";
+const serverAddr = "http://10.6.1.101:8000/img/"
 console.log(serverAddr);
 
 
