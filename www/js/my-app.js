@@ -1,4 +1,4 @@
-const serverAddr = "http://10.6.1.101:8000/img/"
+const serverAddr = "http://10.6.1.101:8000/img/";
 console.log(serverAddr);
 
 
