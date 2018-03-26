@@ -1,7 +1,5 @@
-// var tmp = prompt("enter server address:");
 const serverAddr = "http://10.6.1.101:8000/img/";
 console.log(serverAddr);
-
 
 document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -138,7 +136,9 @@ function sendImage(image_b64) {
         type: 'POST',
         data: imgdata,
         url: serverAddr,
-        success: handleResponse,
+        success: function(result) {
+            handleResponse(image_b64, result);
+        },
         error: function(){
             myApp.dialog.alert("Sorry, something went wrong.", "Error");
             myApp.hideIndicator();
@@ -146,7 +146,7 @@ function sendImage(image_b64) {
     });
 }
 
-function handleResponse(result) {
+function handleResponse(base64Img, result) {
     $$('#camCanvas').show();
 
     var imageJSON = JSON.parse(result);
@@ -166,6 +166,12 @@ function handleResponse(result) {
 
     gesturesInit(image, canvas);
     speakResults(display_string);
+
+    var fileName = fNameInit();
+    
+    saveFile(fileName, b642Blob(base64Img), function(fileURL) {
+        insertEntry(fileURL, boxes, scores, classes, display_string);
+    });
 }
 
 function captureButton() {
@@ -174,7 +180,6 @@ function captureButton() {
         capture();
     } else {
         console.log("going to camera...");
-        gesturesDestroy();
         $$('#imgjs').hide();
         $$('#camCanvas').hide();
         $$('#clickarea').show();
@@ -303,4 +308,75 @@ function showImageHistory(key, myJson, searchTerm) {
 
         gesturesInit(image, canvas);
     };
+}
+
+function b642Blob(b64Data) {
+    var sliceSize = 512;
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+        var byteSlice = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteSlice[i] = slice.charCodeAt(i);
+        }
+
+        var byteArray = new Uint8Array(byteSlice);
+
+        byteArrays.push(byteArray);
+    }
+
+    var blob = new Blob(byteArrays, {type: 'image/jpeg'});
+    return blob;
+}
+
+function fNameInit() {
+
+    var fDate = new Date();
+    var y = fDate.getFullYear();
+    var m = ('0'+fDate.getMonth()).slice(-2);
+    var d = ('0'+fDate.getDate()).slice(-2);
+    var h = ('0'+fDate.getHours()).slice(-2);
+    var mi = ('0'+fDate.getMinutes()).slice(-2);
+    var s = ('0'+fDate.getSeconds()).slice(-2);
+    var fName = 'Img-'+y+m+d+'_'+h+m+s+'.jpg';
+
+    return fName;
+}
+
+function saveFile(fileName, blob, onSuccess) {
+    var fileURL;
+
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fs) {
+        fs.root.getFile(fileName, {create: true, exclusive: true}, function(fileEntry) {
+
+            fileEntry.createWriter(function (fileWriter) {
+
+                fileWriter.onwriteend = function(event) {
+                    console.log("Successful file write...");
+
+                    resolveLocalFileSystemURL(event.target.localURL, function(entry) {
+                        fileURL = entry.toURL();
+                        console.log ('Native URI: ' + fileURL);
+                        onSuccess(fileURL);
+                    });
+
+                };
+        
+                fileWriter.onerror = function (e) {
+                    console.log("Failed file write: s" + e.toString());
+                };
+    
+                fileWriter.write(blob);
+    
+            }, errorPrint);
+        
+          }, errorPrint);
+    }, errorPrint);
+}
+
+function errorPrint(error) {
+    console.log("error: " + error);
 }
