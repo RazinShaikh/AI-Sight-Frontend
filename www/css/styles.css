@@ -30,6 +30,7 @@ body {
 .myCanvas {
     z-index: 20;
     pointer-events: none;
+    image-rendering: pixelated;
 }
 
 .imgShow {

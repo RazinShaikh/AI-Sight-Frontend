@@ -241,22 +241,34 @@ function drawBoxes(ctx, boxes, scores, classes, display_string, canvas_width, ca
         box_height = (boxes[i][2] - boxes[i][0]) * canvas_height;
 
         var color = std_colors[classes[i] % std_colors.length];
+
         ctx.beginPath();
 
         ctx.strokeStyle = color;
-        
         ctx.rect(x, y, box_width, box_height);
+        
+        ctx.stroke();
+
+        ctx.beginPath();
 
         ctx.fillStyle = color;
+        var fSize = 20;
+        ctx.font = "small-caps " + fSize + "px Arial";
+        var textwidth = ctx.measureText(display_string[i].split(":")[0]).width;
 
-        var textwidth = ctx.measureText(display_string[i]).width;
+        if(textwidth > box_width) {
+            fSize = fSize * (box_width / textwidth);
+            if(fSize < 12) { 
+                fSize = 12;
+            }
+            ctx.font = "small-caps " + fSize + "px Arial";
+            textwidth = ctx.measureText(display_string[i].split(":")[0]).width;
+        }
 
-        ctx.fillRect(x, y-18, textwidth, 18);
-
+        ctx.fillRect(x, y, textwidth+10, fSize+3);
         ctx.fillStyle = 'black';
+        ctx.fillText(display_string[i].split(":")[0], x+3, y+fSize-3);        
 
-        ctx.font = "Arial";
-        ctx.fillText(display_string[i], x, y-9);
         ctx.stroke();
     }
 }
