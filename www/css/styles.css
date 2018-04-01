@@ -219,6 +219,13 @@ html {
 .search-icon {
     position: relative;
     float: right;
-    top: 15px;
+    top: 14px;
     right: 15px;
+}
+
+.clear-icon {
+    position: relative;
+    float: right;
+    top: -14px;
+    right: 50px;
 }

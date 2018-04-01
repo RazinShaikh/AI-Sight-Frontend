@@ -138,3 +138,8 @@ function hist() {
     var term = $$("#searchbox").val();
     getHistory(term);
 }
+
+function clear() {
+    var term = '';
+    getHistory(term);
+}
