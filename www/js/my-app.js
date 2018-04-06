@@ -1,4 +1,4 @@
-const serverAddr = "http://10.6.1.101:8000/img/";
+const serverAddr = "http://192.168.0.102:8000/img/";
 console.log(serverAddr);
 
 document.addEventListener("deviceready", onDeviceReady, false);
@@ -47,31 +47,31 @@ function onDeviceReady() {
     });
 
 
-    function showDetectionResult(img_arg) {
+    // function showDetectionResult(img_arg) {
 
-        var imageJSON = JSON.parse(img_arg);
-        var boxes = imageJSON.boxes;
-        var scores = imageJSON.scores;
-        var classes = imageJSON.classes;
-        var display_string = imageJSON.display_string;
-        var canvas = document.getElementById('myCanvas');
-        var ctx = canvas.getContext('2d');
-        var image = document.getElementById("imgShow");
+    //     var imageJSON = JSON.parse(img_arg);
+    //     var boxes = imageJSON.boxes;
+    //     var scores = imageJSON.scores;
+    //     var classes = imageJSON.classes;
+    //     var display_string = imageJSON.display_string;
+    //     var canvas = document.getElementById('myCanvas');
+    //     var ctx = canvas.getContext('2d');
+    //     var image = document.getElementById("imgShow");
 
     
-        canvas.width = $$("#imgShow").width();
-        canvas.height = $$("#imgShow").height();
+    //     canvas.width = $$("#imgShow").width();
+    //     canvas.height = $$("#imgShow").height();
     
-        drawBoxes(ctx, boxes, scores, classes, display_string, canvas.width, canvas.height);
+    //     drawBoxes(ctx, boxes, scores, classes, display_string, canvas.width, canvas.height);
     
-        myApp.hideIndicator();
+    //     myApp.hideIndicator();
 
-        gesturesInit(image, canvas);
+    //     gesturesInit(image, canvas);
 
-        speakResults(display_string);
+    //     speakResults(display_string);
     
-        insertEntry(fileLocation, boxes, scores, classes, display_string);
-    }
+    //     insertEntry(fileLocation, boxes, scores, classes, display_string);
+    // }
 
 
     function errorCallback(err) {
@@ -289,7 +289,7 @@ function showImageHistory(key, myJson, searchTerm) {
                     '        <img id="imgShow" class="imgShow imgCenter" />' +
                     '        <canvas id="myCanvas" class="myCanvas imgCenter"> </canvas>' +
                     '        <div href="#" class="close-popup">' +
-                    '            <i class="icon material-icons md-dark md-30 closeIcon">cancel</i>' +
+                    '            <i class="icon material-icons md-dark md-40 closeIcon">cancel</i>' +
                     '        </div>' +
                     '    </div>' +
                     '</div>';
@@ -304,7 +304,7 @@ function showImageHistory(key, myJson, searchTerm) {
 
     image.onload = function() {
         
-        $$('.imgCenter').css('top', (window.innerHeight - image.height) / 2 + 'px');
+        // $$('.imgCenter').css('top', (window.innerHeight - image.height) / 2 + 'px');
 
         gesturesInit(image, canvas);
     };
