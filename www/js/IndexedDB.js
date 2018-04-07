@@ -133,13 +133,3 @@ function getObjectStore(store_name, mode) {
 }
 
 openDb();
-
-function hist() {
-    var term = $$("#searchbox").val();
-    getHistory(term);
-}
-
-function clear() {
-    var term = '';
-    getHistory(term);
-}

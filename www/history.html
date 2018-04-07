@@ -6,14 +6,21 @@
                     <i class="icon icon-bars"></i>
                 </a> History
             </div>
+            <div class="right">
+                <!--TODO: Delete function-->
+                <i class="icon material-icons md-30">delete_forever</i>
+            </div>
         </div>
     </div>
+
+    <form class="searchbar">
+        <div class="searchbar-input">
+            <input type="search" placeholder="Search">
+            <a href="#" class="searchbar-clear"></a>
+        </div>
+    </form>
+    
     <div class="page-content">
-        <form class="search-container">
-            <input type="text" name="search" id="searchbox" placeholder="Search">
-            <a href="#" type="submit" onclick="hist()"><i class="icon material-icons md-dark search-icon md-30">search</i></a>
-            <a href="#" type="submit" onclick="clear()"><i class="icon material-icons md-dark clear-icon md-20">clear</i></a>
-        </form>
         <div class="grid-container" id="historyGrid"></div>
     </div>
 </div>

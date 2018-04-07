@@ -46,39 +46,20 @@ function onDeviceReady() {
         });
     });
 
-
-    // function showDetectionResult(img_arg) {
-
-    //     var imageJSON = JSON.parse(img_arg);
-    //     var boxes = imageJSON.boxes;
-    //     var scores = imageJSON.scores;
-    //     var classes = imageJSON.classes;
-    //     var display_string = imageJSON.display_string;
-    //     var canvas = document.getElementById('myCanvas');
-    //     var ctx = canvas.getContext('2d');
-    //     var image = document.getElementById("imgShow");
-
-    
-    //     canvas.width = $$("#imgShow").width();
-    //     canvas.height = $$("#imgShow").height();
-    
-    //     drawBoxes(ctx, boxes, scores, classes, display_string, canvas.width, canvas.height);
-    
-    //     myApp.hideIndicator();
-
-    //     gesturesInit(image, canvas);
-
-    //     speakResults(display_string);
-    
-    //     insertEntry(fileLocation, boxes, scores, classes, display_string);
-    // }
-
-
     function errorCallback(err) {
         console.log("error: "+err);
     }
 
     myApp.onPageInit("history", function() {
+        var mySearchBar = myApp.searchbar('.searchbar',{
+            customSearch: true,
+            onSearch: function(s) {
+                getHistory(s.value);
+            },
+            onClear: function(s) {
+                getHistory("");
+            }
+        });
         getHistory();
     });
 
@@ -140,7 +121,7 @@ function sendImage(image_b64) {
             handleResponse(image_b64, result);
         },
         error: function(){
-            myApp.dialog.alert("Sorry, something went wrong.", "Error");
+            alert("Sorry, something went wrong.");
             myApp.hideIndicator();
         }
     });
