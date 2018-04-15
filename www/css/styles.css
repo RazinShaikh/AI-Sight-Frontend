@@ -77,6 +77,32 @@ body {
     bottom: 15%;
 }
 
+.text{
+  position:absolute;
+  width: 400px;
+  height: 100px;
+  bottom:270px;
+  text-indent:2em;
+  font-size:20px;
+  font-style:italic;
+  left:20px;
+
+  font-weight:900;
+  color:#14b9c8;
+}
+.copyright{
+  position:absolute;
+  width: 400px;
+  height: 100px;
+  bottom:90px;
+  font-style:italic;
+  font-size:15px;
+  font-weight:700;
+  font-family:arial;
+
+  color:#97CBFF;
+}
+
 .button {
     background-color: #fafafa;
 }
@@ -117,6 +143,14 @@ body {
 
 .ai-text {
     top: 38%;
+}
+
+.ai-logo2 {
+    top: 15%;
+}
+
+.ai-text2 {
+    top: 33%;
 }
 
 .panelWords {
