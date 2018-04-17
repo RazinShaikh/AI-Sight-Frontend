@@ -90,18 +90,6 @@ body {
   font-weight:900;
   color:#14b9c8;
 }
-.copyright{
-  position:absolute;
-  width: 400px;
-  height: 100px;
-  bottom:90px;
-  font-style:italic;
-  font-size:15px;
-  font-weight:700;
-  font-family:arial;
-
-  color:#97CBFF;
-}
 
 .button {
     background-color: #fafafa;
@@ -217,7 +205,10 @@ a.color-14b9c8 {
     transition: all .3s ease-in-out;
 }
 
-
+.aboutpagecenter {
+    margin: auto;
+    text-align:center;
+}
 
 
 
