@@ -1,3 +1,6 @@
+// Main application function mechanism.
+// Written by GRP Team 3
+
 const serverAddr = "http://192.168.0.102:8000/img/";
 console.log(serverAddr);
 

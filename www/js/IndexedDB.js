@@ -1,3 +1,6 @@
+// Main database manipulation mechanism.
+// Written by GRP Team 3
+
 const DB_VERSION = 1;
 const DB_NAME = 'aiSight';
 const DB_STORE_NAME = 'history';

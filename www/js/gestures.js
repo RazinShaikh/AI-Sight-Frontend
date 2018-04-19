@@ -1,3 +1,6 @@
+// Main gesture handling function.
+// Written by GRP Team 3
+
 var reqAnimationFrame = (function () {
     return window[Hammer.prefixed(window, 'requestAnimationFrame')] || function (callback) {
         window.setTimeout(callback, 1000 / 60);

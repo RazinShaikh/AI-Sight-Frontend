@@ -1,3 +1,6 @@
+// Gesture handling function for camera view.
+// Written by GRP Team 3
+
 var element;
 var ticking = false;
 var manager;
