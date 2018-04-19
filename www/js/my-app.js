@@ -1,7 +1,8 @@
 // Main application function mechanism.
 // Written by GRP Team 3
 
-const serverAddr = "http://192.168.0.102:8000/img/";
+const serverAddr = "http://10.6.1.101:8000/img/";
+
 console.log(serverAddr);
 
 document.addEventListener("deviceready", onDeviceReady, false);
@@ -124,7 +125,7 @@ function sendImage(image_b64) {
             handleResponse(image_b64, result);
         },
         error: function(){
-            alert("Sorry, something went wrong.");
+            myApp.dialog.alert("Sorry, something went wrong.");
             myApp.hideIndicator();
         }
     });
