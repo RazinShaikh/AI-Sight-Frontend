@@ -125,7 +125,7 @@ function sendImage(image_b64) {
             handleResponse(image_b64, result);
         },
         error: function(){
-            myApp.dialog.alert("Sorry, something went wrong.");
+            alert("Sorry, something went wrong.");
             myApp.hideIndicator();
         }
     });

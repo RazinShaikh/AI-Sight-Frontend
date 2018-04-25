@@ -135,4 +135,26 @@ function getObjectStore(store_name, mode) {
     return tx.objectStore(store_name);
 }
 
+function deleteHistory() {
+    console.log("HI");
+    if (confirm("Delete all?")) {
+        db.close();
+        var request = window.indexedDB.deleteDatabase(DB_NAME);
+        
+        request.onerror = function(event) {
+            alert("Deletion failed");
+        };
+
+        request.onsuccess = function(event) {
+            alert("History cleared");
+            openDb();
+            document.getElementById("historyGrid").innerHTML = "";
+        };
+
+        request.onblocked = function () {
+            console.log("Couldn't delete database due to the operation being blocked");
+        };
+    }
+}
+
 openDb();
