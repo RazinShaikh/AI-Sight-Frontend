@@ -69,6 +69,8 @@ function onDeviceReady() {
 
     myApp.onPageAfterAnimation('index', function (page){
         $$('.page-on-left').remove();
+        var clickarea = document.getElementById('clickarea');
+        camGestureInit(clickarea);
     });
 
 }
