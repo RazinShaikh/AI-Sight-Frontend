@@ -1,7 +1,10 @@
 // Main application function mechanism.
 // Written by GRP Team 3
 
-const serverAddr = "http://10.6.1.101:8000/img/";
+addr = prompt("Enter ip addr");
+
+const serverAddr = "http://"+addr+":8000/img/";
+// const serverAddr = "http://10.6.1.101:8000/img/";
 
 console.log(serverAddr);
 
@@ -10,8 +13,8 @@ document.addEventListener("deviceready", onDeviceReady, false);
 // Initialize app
 var myApp = new Framework7({
     pushState: true,
-    swipePanel:'left',
-    swipePanelActiveArea: 24,
+    //swipePanel:'left',
+    //swipePanelActiveArea: 24,
     material:true,
 });
 
@@ -40,32 +43,24 @@ function onDeviceReady() {
     var clickarea = document.getElementById('clickarea');
     camGestureInit(clickarea);
 
-    $$(document).on("click", "#openAlbum", function () {
 
-        navigator.camera.getPicture(galleryImage, errorCallback, {
-            quality: 50,
-            sourceType : Camera.PictureSourceType.SAVEDPHOTOALBUM,
-            destinationType: Camera.DestinationType.DATA_URL,
-            correctOrientation: true
-        });
-    });
 
     function errorCallback(err) {
         console.log("error: "+err);
     }
 
-    myApp.onPageInit("history", function() {
-        var mySearchBar = myApp.searchbar('.searchbar',{
-            customSearch: true,
-            onSearch: function(s) {
-                getHistory(s.value);
-            },
-            onClear: function(s) {
-                getHistory("");
-            }
-        });
-        getHistory();
-    });
+    // myApp.onPageInit("history", function() {
+    //     var mySearchBar = myApp.searchbar('.searchbar',{
+    //         customSearch: true,
+    //         onSearch: function(s) {
+    //             getHistory(s.value);
+    //         },
+    //         onClear: function(s) {
+    //             getHistory("");
+    //         }
+    //     });
+    //     getHistory();
+    // });
 
     myApp.onPageAfterAnimation('index', function (page){
         $$('.page-on-left').remove();
@@ -156,23 +151,23 @@ function handleResponse(base64Img, result) {
 
     var fileName = fNameInit();
     
-    saveFile(fileName, b642Blob(base64Img), function(fileURL) {
-        insertEntry(fileURL, boxes, scores, classes, display_string);
-    });
+    // saveFile(fileName, b642Blob(base64Img), function(fileURL) {
+    //     insertEntry(fileURL, boxes, scores, classes, display_string);
+    // });
 }
 
-function captureButton() {
-    if (cameraOrResult) {
-        console.log("capturing...");
-        capture();
-    } else {
-        console.log("going to camera...");
-        $$('#imgjs').hide();
-        $$('#camCanvas').hide();
-        $$('#clickarea').show();
-        cameraOrResult = true;
-    }
-}
+// function captureButton() {
+//     if (cameraOrResult) {
+//         console.log("capturing...");
+//         capture();
+//     } else {
+//         console.log("going to camera...");
+//         $$('#imgjs').hide();
+//         $$('#camCanvas').hide();
+//         $$('#clickarea').show();
+//         cameraOrResult = true;
+//     }
+// }
 
 
 function showDetectionResult2(img_arg, searchTerm) {
@@ -268,101 +263,101 @@ function drawBoxes(ctx, boxes, scores, classes, display_string, canvas_width, ca
 
 
 
-function showImageHistory(key, myJson, searchTerm) {
-    var img = document.getElementById("img" + key);
+// function showImageHistory(key, myJson, searchTerm) {
+//     var img = document.getElementById("img" + key);
 
-    var popupHTML = '<div class="popup backGroundImage">' +
-                    '    <div class="page-content page-content-for-send">' +
-                    '        <img id="imgShow" class="imgShow imgCenter" />' +
-                    '        <canvas id="myCanvas" class="myCanvas imgCenter"> </canvas>' +
-                    '        <div href="#" class="close-popup">' +
-                    '            <i class="icon material-icons md-dark md-40 closeIcon">cancel</i>' +
-                    '        </div>' +
-                    '    </div>' +
-                    '</div>';
+//     var popupHTML = '<div class="popup backGroundImage">' +
+//                     '    <div class="page-content page-content-for-send">' +
+//                     '        <img id="imgShow" class="imgShow imgCenter" />' +
+//                     '        <canvas id="myCanvas" class="myCanvas imgCenter"> </canvas>' +
+//                     '        <div href="#" class="close-popup">' +
+//                     '            <i class="icon material-icons md-dark md-40 closeIcon">cancel</i>' +
+//                     '        </div>' +
+//                     '    </div>' +
+//                     '</div>';
                     
-    myApp.popup(popupHTML);
+//     myApp.popup(popupHTML);
 
-    var image = document.getElementById("imgShow");
-    var canvas = document.getElementById("myCanvas");
-    image.src = img.src;
+//     var image = document.getElementById("imgShow");
+//     var canvas = document.getElementById("myCanvas");
+//     image.src = img.src;
     
-    showDetectionResult2(myJson, searchTerm);
+//     showDetectionResult2(myJson, searchTerm);
 
-    image.onload = function() {
+//     image.onload = function() {
         
-        // $$('.imgCenter').css('top', (window.innerHeight - image.height) / 2 + 'px');
+//         // $$('.imgCenter').css('top', (window.innerHeight - image.height) / 2 + 'px');
 
-        gesturesInit(image, canvas);
-    };
-}
+//         gesturesInit(image, canvas);
+//     };
+// }
 
-function b642Blob(b64Data) {
-    var sliceSize = 512;
-    var byteCharacters = atob(b64Data);
-    var byteArrays = [];
+// function b642Blob(b64Data) {
+//     var sliceSize = 512;
+//     var byteCharacters = atob(b64Data);
+//     var byteArrays = [];
 
-    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-        var slice = byteCharacters.slice(offset, offset + sliceSize);
+//     for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+//         var slice = byteCharacters.slice(offset, offset + sliceSize);
 
-        var byteSlice = new Array(slice.length);
-        for (var i = 0; i < slice.length; i++) {
-            byteSlice[i] = slice.charCodeAt(i);
-        }
+//         var byteSlice = new Array(slice.length);
+//         for (var i = 0; i < slice.length; i++) {
+//             byteSlice[i] = slice.charCodeAt(i);
+//         }
 
-        var byteArray = new Uint8Array(byteSlice);
+//         var byteArray = new Uint8Array(byteSlice);
 
-        byteArrays.push(byteArray);
-    }
+//         byteArrays.push(byteArray);
+//     }
 
-    var blob = new Blob(byteArrays, {type: 'image/jpeg'});
-    return blob;
-}
+//     var blob = new Blob(byteArrays, {type: 'image/jpeg'});
+//     return blob;
+// }
 
-function fNameInit() {
+// function fNameInit() {
 
-    var fDate = new Date();
-    var y = fDate.getFullYear();
-    var m = ('0'+fDate.getMonth()).slice(-2);
-    var d = ('0'+fDate.getDate()).slice(-2);
-    var h = ('0'+fDate.getHours()).slice(-2);
-    var mi = ('0'+fDate.getMinutes()).slice(-2);
-    var s = ('0'+fDate.getSeconds()).slice(-2);
-    var fName = 'Img-'+y+m+d+'_'+h+m+s+'.jpg';
+//     var fDate = new Date();
+//     var y = fDate.getFullYear();
+//     var m = ('0'+fDate.getMonth()).slice(-2);
+//     var d = ('0'+fDate.getDate()).slice(-2);
+//     var h = ('0'+fDate.getHours()).slice(-2);
+//     var mi = ('0'+fDate.getMinutes()).slice(-2);
+//     var s = ('0'+fDate.getSeconds()).slice(-2);
+//     var fName = 'Img-'+y+m+d+'_'+h+m+s+'.jpg';
 
-    return fName;
-}
+//     return fName;
+// }
 
-function saveFile(fileName, blob, onSuccess) {
-    var fileURL;
+// function saveFile(fileName, blob, onSuccess) {
+//     var fileURL;
 
-    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fs) {
-        fs.root.getFile(fileName, {create: true, exclusive: true}, function(fileEntry) {
+//     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fs) {
+//         fs.root.getFile(fileName, {create: true, exclusive: true}, function(fileEntry) {
 
-            fileEntry.createWriter(function (fileWriter) {
+//             fileEntry.createWriter(function (fileWriter) {
 
-                fileWriter.onwriteend = function(event) {
-                    console.log("Successful file write...");
+//                 fileWriter.onwriteend = function(event) {
+//                     console.log("Successful file write...");
 
-                    resolveLocalFileSystemURL(event.target.localURL, function(entry) {
-                        fileURL = entry.toURL();
-                        console.log ('Native URI: ' + fileURL);
-                        onSuccess(fileURL);
-                    });
+//                     resolveLocalFileSystemURL(event.target.localURL, function(entry) {
+//                         fileURL = entry.toURL();
+//                         console.log ('Native URI: ' + fileURL);
+//                         onSuccess(fileURL);
+//                     });
 
-                };
+//                 };
         
-                fileWriter.onerror = function (e) {
-                    console.log("Failed file write: s" + e.toString());
-                };
+//                 fileWriter.onerror = function (e) {
+//                     console.log("Failed file write: s" + e.toString());
+//                 };
     
-                fileWriter.write(blob);
+//                 fileWriter.write(blob);
     
-            }, errorPrint);
+//             }, errorPrint);
         
-          }, errorPrint);
-    }, errorPrint);
-}
+//           }, errorPrint);
+//     }, errorPrint);
+// }
 
 function errorPrint(error) {
     console.log("error: " + error);

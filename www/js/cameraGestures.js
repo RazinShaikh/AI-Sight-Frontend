@@ -15,7 +15,7 @@ const multiplier = 32;
 function camGestureInit(element) {
     manager = new Hammer.Manager(element, {recognizers: []});
     manager.add(new Hammer.Pinch({ threshold: 0 }));
-    manager.add(new Hammer.Tap({taps: 2}));
+    manager.add(new Hammer.Tap({taps: 1}));
 
     manager.on("pinchstart pinchmove pinchend", zoom);
     manager.on("tap", snap);
