@@ -187,6 +187,7 @@ function onTap(ev) {
     }
 
     requestElementUpdate(updateElementVisibility);
+    tapToDet = false;
 }
 
 function gesturesDestroy() {

@@ -26,6 +26,7 @@ var mainView = myApp.addView('.view-main', {
 });
 
 var cameraOrResult = true; // true = camera page, false = result page.
+var tapToDet = true;
 
 function onDeviceReady() {
     // Now safe to use device APIs
@@ -43,10 +44,23 @@ function onDeviceReady() {
     var clickarea = document.getElementById('clickarea');
     camGestureInit(clickarea);
 
+    tapToDetect();
 
 
     function errorCallback(err) {
         console.log("error: "+err);
+    }
+
+    async function tapToDetect()
+    {
+        await sleep(2500);
+        if (tapToDet) {
+            TTS.speak("Tap to detect.", tapToDetect, errorPrint);
+        }
+    }
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
 
     // myApp.onPageInit("history", function() {
@@ -72,9 +86,10 @@ function onDeviceReady() {
 
 function speakResults(results) {
     var i = 0;
-    var s = function () {
+    var s = async function () {
         if (i < results.length) {
             i++;
+            await sleep(500);
             TTS.speak(results[i-1].split(":")[0], s, err);
         }
     };
@@ -107,6 +122,7 @@ function capture() {
         $$('#imgjs').attr('src',b64src);
         sendImage(base64Img);
         cameraOrResult = false;
+        tapToDet = false;
     });
 }
 
