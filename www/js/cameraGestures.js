@@ -58,9 +58,6 @@ function zoom(ev) {
 
     curZoom2 = curZoom + lastZoom;
 
-    // console.log("curZoom: " + curZoom + ", curZoom2: " + curZoom2 + ", lastZoom: " + lastZoom);
-
-
     if(curZoom2 < 1) {
         curZoom2 = 1;
     } 

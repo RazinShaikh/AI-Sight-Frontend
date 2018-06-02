@@ -1,6 +1,3 @@
-// Main application function mechanism.
-// Written by GRP Team 3
-
 addr = prompt("Enter ip addr");
 
 const serverAddr = "http://"+addr+":8000/img/";
@@ -13,8 +10,6 @@ document.addEventListener("deviceready", onDeviceReady, false);
 // Initialize app
 var myApp = new Framework7({
     pushState: true,
-    //swipePanel:'left',
-    //swipePanelActiveArea: 24,
     material:true,
 });
 
@@ -30,87 +25,53 @@ var tapToDet = true;
 
 function onDeviceReady() {
     // Now safe to use device APIs
-
+    
     var fileLocation;
-
+    
     StatusBar.backgroundColorByHexString("#0097A7");
-
+    
     CameraPreview.startCamera({
         camera: CameraPreview.CAMERA_DIRECTION.BACK,
         toBack: true,
         tapPhoto: true,
     });
-
+    
     var clickarea = document.getElementById('clickarea');
     camGestureInit(clickarea);
-
+    
     tapToDetect();
-
-
-    function errorCallback(err) {
-        console.log("error: "+err);
+        
+        myApp.onPageAfterAnimation('index', function (page){
+            $$('.page-on-left').remove();
+            var clickarea = document.getElementById('clickarea');
+            camGestureInit(clickarea);
+        });
+        
     }
-
-    async function tapToDetect()
-    {
-        await sleep(2500);
-        if (tapToDet) {
-            TTS.speak("Tap to detect.", tapToDetect, errorPrint);
-        }
-    }
-
-    function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
-    // myApp.onPageInit("history", function() {
-    //     var mySearchBar = myApp.searchbar('.searchbar',{
-    //         customSearch: true,
-    //         onSearch: function(s) {
-    //             getHistory(s.value);
-    //         },
-    //         onClear: function(s) {
-    //             getHistory("");
-    //         }
-    //     });
-    //     getHistory();
-    // });
-
-    myApp.onPageAfterAnimation('index', function (page){
-        $$('.page-on-left').remove();
-        var clickarea = document.getElementById('clickarea');
-        camGestureInit(clickarea);
-    });
-
-}
-
+    
 function speakResults(results) {
     var i = 0;
-    var s = async function () {
+    var s = function () {
         if (i < results.length) {
             i++;
-            await sleep(500);
-            TTS.speak(results[i-1].split(":")[0], s, err);
+            TTS.speak(results[i-1].split(":")[0], s, errorPrint);
         }
     };
-
-    function err(reason) {
-        console.log("error: " + reason);
-    }
 
     s();
 }
 
-function galleryImage(base64Img) {
-    myApp.showIndicator();
-    b64src = 'data:image/jpeg;base64,'+base64Img;
-    $$('#clickarea').hide();
-    $$('#imgjs').show();
-    $$('#imgjs').attr('src',b64src);
-    sendImage(base64Img);
-    cameraOrResult = false;
+async function tapToDetect()
+{
+    await sleep(2500);
+    if (tapToDet) {
+        TTS.speak("Tap to detect.", tapToDetect, errorPrint);
+    }
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 function capture() {
     myApp.showIndicator();
@@ -164,42 +125,6 @@ function handleResponse(base64Img, result) {
 
     gesturesInit(image, canvas);
     speakResults(display_string);
-
-    // var fileName = fNameInit();
-
-    // saveFile(fileName, b642Blob(base64Img), function(fileURL) {
-    //     insertEntry(fileURL, boxes, scores, classes, display_string);
-    // });
-}
-//
-// function captureButton() {
-//     if (cameraOrResult) {
-//         console.log("capturing...");
-//         capture();
-//     } else {
-//         console.log("going to camera...");
-//         $$('#imgjs').hide();
-//         $$('#camCanvas').hide();
-//         $$('#clickarea').show();
-//         cameraOrResult = true;
-//     }
-// }
-
-
-function showDetectionResult2(img_arg, searchTerm) {
-
-    var imageJSON = JSON.parse(img_arg);
-    var boxes = imageJSON.boxes;
-    var scores = imageJSON.scores;
-    var classes = imageJSON.classes;
-    var display_string = imageJSON.display_string;
-    var canvas = document.getElementById('myCanvas');
-    var ctx = canvas.getContext('2d');
-
-    canvas.width = $$("#imgShow").width();
-    canvas.height = $$("#imgShow").height();
-
-    drawBoxes(ctx, boxes, scores, classes, display_string, canvas.width, canvas.height, searchTerm);
 }
 
 function drawBoxes(ctx, boxes, scores, classes, display_string, canvas_width, canvas_height, searchTerm) {
@@ -275,105 +200,6 @@ function drawBoxes(ctx, boxes, scores, classes, display_string, canvas_width, ca
         ctx.stroke();
     }
 }
-
-
-
-
-// function showImageHistory(key, myJson, searchTerm) {
-//     var img = document.getElementById("img" + key);
-
-//     var popupHTML = '<div class="popup backGroundImage">' +
-//                     '    <div class="page-content page-content-for-send">' +
-//                     '        <img id="imgShow" class="imgShow imgCenter" />' +
-//                     '        <canvas id="myCanvas" class="myCanvas imgCenter"> </canvas>' +
-//                     '        <div href="#" class="close-popup">' +
-//                     '            <i class="icon material-icons md-dark md-40 closeIcon">cancel</i>' +
-//                     '        </div>' +
-//                     '    </div>' +
-//                     '</div>';
-
-//     myApp.popup(popupHTML);
-
-//     var image = document.getElementById("imgShow");
-//     var canvas = document.getElementById("myCanvas");
-//     image.src = img.src;
-
-//     showDetectionResult2(myJson, searchTerm);
-
-//     image.onload = function() {
-
-//         // $$('.imgCenter').css('top', (window.innerHeight - image.height) / 2 + 'px');
-
-//         gesturesInit(image, canvas);
-//     };
-// }
-
-// function b642Blob(b64Data) {
-//     var sliceSize = 512;
-//     var byteCharacters = atob(b64Data);
-//     var byteArrays = [];
-
-//     for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-//         var slice = byteCharacters.slice(offset, offset + sliceSize);
-
-//         var byteSlice = new Array(slice.length);
-//         for (var i = 0; i < slice.length; i++) {
-//             byteSlice[i] = slice.charCodeAt(i);
-//         }
-
-//         var byteArray = new Uint8Array(byteSlice);
-
-//         byteArrays.push(byteArray);
-//     }
-
-//     var blob = new Blob(byteArrays, {type: 'image/jpeg'});
-//     return blob;
-// }
-
-// function fNameInit() {
-
-//     var fDate = new Date();
-//     var y = fDate.getFullYear();
-//     var m = ('0'+fDate.getMonth()).slice(-2);
-//     var d = ('0'+fDate.getDate()).slice(-2);
-//     var h = ('0'+fDate.getHours()).slice(-2);
-//     var mi = ('0'+fDate.getMinutes()).slice(-2);
-//     var s = ('0'+fDate.getSeconds()).slice(-2);
-//     var fName = 'Img-'+y+m+d+'_'+h+m+s+'.jpg';
-
-//     return fName;
-// }
-
-// function saveFile(fileName, blob, onSuccess) {
-//     var fileURL;
-
-//     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fs) {
-//         fs.root.getFile(fileName, {create: true, exclusive: true}, function(fileEntry) {
-
-//             fileEntry.createWriter(function (fileWriter) {
-
-//                 fileWriter.onwriteend = function(event) {
-//                     console.log("Successful file write...");
-
-//                     resolveLocalFileSystemURL(event.target.localURL, function(entry) {
-//                         fileURL = entry.toURL();
-//                         console.log ('Native URI: ' + fileURL);
-//                         onSuccess(fileURL);
-//                     });
-
-//                 };
-
-//                 fileWriter.onerror = function (e) {
-//                     console.log("Failed file write: s" + e.toString());
-//                 };
-
-//                 fileWriter.write(blob);
-
-//             }, errorPrint);
-
-//           }, errorPrint);
-//     }, errorPrint);
-// }
 
 function errorPrint(error) {
     console.log("error: " + error);
