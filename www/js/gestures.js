@@ -193,6 +193,7 @@ function onTap(ev) {
     $$('#camCanvas').hide();
     $$('#clickarea').show();
     cameraOrResult = true;
+    tapToDet = false;
 }
 
 function gesturesDestroy() {
