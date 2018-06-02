@@ -82,7 +82,7 @@ function speakResults(results) {
     function err(reason) {
         console.log("error: " + reason);
     }
-    
+
     s();
 }
 
@@ -149,13 +149,13 @@ function handleResponse(base64Img, result) {
     gesturesInit(image, canvas);
     speakResults(display_string);
 
-    var fileName = fNameInit();
-    
+    // var fileName = fNameInit();
+
     // saveFile(fileName, b642Blob(base64Img), function(fileURL) {
     //     insertEntry(fileURL, boxes, scores, classes, display_string);
     // });
 }
-
+//
 // function captureButton() {
 //     if (cameraOrResult) {
 //         console.log("capturing...");
@@ -233,7 +233,7 @@ function drawBoxes(ctx, boxes, scores, classes, display_string, canvas_width, ca
 
         ctx.strokeStyle = color;
         ctx.rect(x, y, box_width, box_height);
-        
+
         ctx.stroke();
 
         ctx.beginPath();
@@ -245,7 +245,7 @@ function drawBoxes(ctx, boxes, scores, classes, display_string, canvas_width, ca
 
         if(textwidth > box_width) {
             fSize = fSize * (box_width / textwidth);
-            if(fSize < 12) { 
+            if(fSize < 12) {
                 fSize = 12;
             }
             ctx.font = "small-caps " + fSize + "px Arial";
@@ -254,7 +254,7 @@ function drawBoxes(ctx, boxes, scores, classes, display_string, canvas_width, ca
 
         ctx.fillRect(x, y, textwidth+10, fSize+3);
         ctx.fillStyle = 'black';
-        ctx.fillText(display_string[i].split(":")[0], x+3, y+fSize-3);        
+        ctx.fillText(display_string[i].split(":")[0], x+3, y+fSize-3);
 
         ctx.stroke();
     }
@@ -275,17 +275,17 @@ function drawBoxes(ctx, boxes, scores, classes, display_string, canvas_width, ca
 //                     '        </div>' +
 //                     '    </div>' +
 //                     '</div>';
-                    
+
 //     myApp.popup(popupHTML);
 
 //     var image = document.getElementById("imgShow");
 //     var canvas = document.getElementById("myCanvas");
 //     image.src = img.src;
-    
+
 //     showDetectionResult2(myJson, searchTerm);
 
 //     image.onload = function() {
-        
+
 //         // $$('.imgCenter').css('top', (window.innerHeight - image.height) / 2 + 'px');
 
 //         gesturesInit(image, canvas);
@@ -346,15 +346,15 @@ function drawBoxes(ctx, boxes, scores, classes, display_string, canvas_width, ca
 //                     });
 
 //                 };
-        
+
 //                 fileWriter.onerror = function (e) {
 //                     console.log("Failed file write: s" + e.toString());
 //                 };
-    
+
 //                 fileWriter.write(blob);
-    
+
 //             }, errorPrint);
-        
+
 //           }, errorPrint);
 //     }, errorPrint);
 // }

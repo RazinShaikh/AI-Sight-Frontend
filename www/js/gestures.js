@@ -41,7 +41,7 @@ function gesturesInit(element, element2) {
     var sTap = new Hammer.Tap({ event: 'singletap', taps: 1 });
     var dTap = new Hammer.Tap({ event: 'doubletap', taps: 2 });
     manager.add([dTap, sTap]);
-    
+
     dTap.recognizeWith(sTap);
     sTap.requireFailure(dTap);
 
@@ -60,7 +60,7 @@ function updateElementTransform() {
                 'translate3d(' + transform.translate.x + 'px, ' + transform.translate.y + 'px, 0)',
                 'scale(' + transform.scale + ', ' + transform.scale + ')'
     ];
-    
+
     value = value.join(" ");
 
     element.style.webkitTransform = value;
@@ -140,7 +140,7 @@ function onPan(ev) {
             x: cur_x,
             y: cur_y
         };
-        
+
     }
 
     requestElementUpdate(updateElementTransform);
@@ -155,7 +155,7 @@ function onDoubleTap(ev) {
     element.classList.add("animate");
     if (element2)
         element2.classList.add("animate");
-    
+
     if (transform.scale >= 2) {
         transform.scale = 1;
         cur_x = 0;
@@ -172,21 +172,27 @@ function onDoubleTap(ev) {
 }
 
 function onTap(ev) {
-    element.classList.add("animate");
-    if (element2)
-        element2.classList.add("animate");
+    // element.classList.add("animate");
+    // if (element2)
+    //     element2.classList.add("animate");
+    //
+    // console.log("tapping");
+    //
+    // if (opacity == 1) {
+    //     opacity = 0;
+    //     visibility = "hidden";
+    // } else {
+    //     opacity = 1;
+    //     visibility = "visible";
+    // }
+    //
+    // requestElementUpdate(updateElementVisibility);
 
-    console.log("tapping");
-
-    if (opacity == 1) {
-        opacity = 0;
-        visibility = "hidden";
-    } else {
-        opacity = 1;
-        visibility = "visible";
-    }
-
-    requestElementUpdate(updateElementVisibility);
+    console.log("going to camera...");
+    $$('#imgjs').hide();
+    $$('#camCanvas').hide();
+    $$('#clickarea').show();
+    cameraOrResult = true;
 }
 
 function gesturesDestroy() {
