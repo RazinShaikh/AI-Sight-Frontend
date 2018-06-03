@@ -49,13 +49,13 @@ function onDeviceReady() {
         });
 
     }
-
-function speakResults(results) {
+    
+function speakResults(results, positions) {
     var i = 0;
     var s = function () {
         if (i < results.length) {
             i++;
-            TTS.speak(results[i-1].split(":")[0], s, errorPrint);
+            TTS.speak(positions[i-1] + " " + results[i-1].split(":")[0], s, errorPrint);
         }
     };
 
@@ -143,7 +143,58 @@ function handleResponse(base64Img, result) {
     myApp.hideIndicator();
 
     gesturesInit(image, canvas);
-    speakResults(display_string);
+    positions = getPostions(boxes);
+    speakResults(display_string, positions);
+}
+
+function getPostions(boxes){
+    var xCenter, yCenter;
+    var Div1 = 1/3;
+    var Div2 = 2/3;
+    var positions = [];
+
+    for(var i = 0; i < boxes.length; i++){
+        xCenter = boxes[i][1]  +  ( boxes[i][3] - boxes[i][1]) / 2;
+        yCenter = boxes[i][0]  +  ( boxes[i][2] - boxes[i][0]) / 2;
+
+        var pos;
+
+        if (yCenter < Div1) {
+            if (xCenter < Div1) {
+                pos = "Top left";
+            }
+            else if (xCenter < Div2) {
+                pos = "Top";
+            }
+            else {
+                pos = "Top right";
+            }
+        } else if (yCenter < Div2) {
+            if (xCenter < Div1) {
+                pos = "Left";
+            }
+            else if (xCenter < Div2) {
+                pos = "Center";
+            }
+            else {
+                pos = "Right";
+            }
+        } else{
+            if (xCenter < Div1) {
+                pos = "Bottom left";
+            }
+            else if (xCenter < Div2) {
+                pos = "Bottom";
+            }
+            else {
+                pos = "Bottom right";
+            }
+        }
+
+        positions.push(pos);
+    }
+
+    return positions;
 }
 
 function drawBoxes(ctx, boxes, scores, classes, display_string, canvas_width, canvas_height, searchTerm) {
