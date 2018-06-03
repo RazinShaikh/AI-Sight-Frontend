@@ -1,6 +1,6 @@
-addr = prompt("Enter ip addr");
+//addr = prompt("Enter ip addr");
 
-const serverAddr = "http://"+addr+":8000/"; // \text
+const serverAddr = "http://192.168.137.1:8000/"; // \text
 // const serverAddr = "http://10.6.1.101:8000/img/";
 
 console.log(serverAddr);
@@ -49,7 +49,7 @@ function onDeviceReady() {
         });
 
     }
-    
+
 function speakResults(results, positions) {
     var i = 0;
     var s = function () {
@@ -117,11 +117,15 @@ function sendImage(image_b64) {
     });
 }
 
+function speakText(text){
+    TTS.speak(text, null, errorPrint);
+}
+
 function handleText(text){
     $$('#camCanvas').show();
 
     gesturesInit(image, canvas);
-    speakResults(text);
+    speakText(text);
 }
 
 function handleResponse(base64Img, result) {
