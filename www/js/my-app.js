@@ -1,6 +1,6 @@
 addr = prompt("Enter ip addr");
 
-const serverAddr = "http://"+addr+":8000/img/";
+const serverAddr = "http://"+addr+":8000/"; // \text
 // const serverAddr = "http://10.6.1.101:8000/img/";
 
 console.log(serverAddr);
@@ -22,33 +22,34 @@ var mainView = myApp.addView('.view-main', {
 
 var cameraOrResult = true; // true = camera page, false = result page.
 var tapToDet = true;
+var processText = false;
 
 function onDeviceReady() {
     // Now safe to use device APIs
-    
+
     var fileLocation;
-    
+
     StatusBar.backgroundColorByHexString("#0097A7");
-    
+
     CameraPreview.startCamera({
         camera: CameraPreview.CAMERA_DIRECTION.BACK,
         toBack: true,
         tapPhoto: true,
     });
-    
+
     var clickarea = document.getElementById('clickarea');
     camGestureInit(clickarea);
-    
+
     tapToDetect();
-        
+
         myApp.onPageAfterAnimation('index', function (page){
             $$('.page-on-left').remove();
             var clickarea = document.getElementById('clickarea');
             camGestureInit(clickarea);
         });
-        
+
     }
-    
+
 function speakResults(results) {
     var i = 0;
     var s = function () {
@@ -75,6 +76,7 @@ function sleep(ms) {
 
 function capture() {
     myApp.showIndicator();
+    alert(processText);
     console.log("function called.");
     CameraPreview.takePicture({},function(base64Img) {
         b64src = 'data:image/jpeg;base64,'+base64Img;
@@ -90,19 +92,36 @@ function capture() {
 function sendImage(image_b64) {
     console.log("Sending image...");
     var imgdata = '{ "img" : "' + image_b64 + '" }';
+    if(processText){
+        var address = serverAddr + "text/"
+    }else{
+        var address = serverAddr + "img/"
+    }
+
     $$.ajax({
         datatype: 'json',
         type: 'POST',
         data: imgdata,
-        url: serverAddr,
+        url: address,
         success: function(result) {
-            handleResponse(image_b64, result);
+            if( !processText )
+              handleResponse(image_b64, result);
+            else {
+              handleText(result);
+            }
         },
         error: function(){
             alert("Sorry, something went wrong.");
             myApp.hideIndicator();
         }
     });
+}
+
+function handleText(text){
+    $$('#camCanvas').show();
+
+    gesturesInit(image, canvas);
+    speakResults(text);
 }
 
 function handleResponse(base64Img, result) {
